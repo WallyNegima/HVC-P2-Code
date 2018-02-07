@@ -16,12 +16,12 @@ make
 sudo make install
 cd ../
 
-git clone https://github.com/m-mizutani/libfluent.git
-cd libfluent/
-cmake .
-make
-sudo make install
-cd ../
+# git clone https://github.com/m-mizutani/libfluent.git
+# cd libfluent/
+# cmake .
+# make
+# sudo make install
+# cd ../
 
 sudo /sbin/ldconfig -v
 cp ./99-serial.rules /etc/udev/rules.d
