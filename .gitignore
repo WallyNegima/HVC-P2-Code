@@ -1,6 +1,10 @@
 # Prerequisites
 *.d
 
+wiringPi/
+msgpack-c/
+libfluent/
+
 # Compiled Object files
 *.slo
 *.lo
