@@ -1,7 +1,31 @@
 #include <stdio.h>
+#include <iostream>
+#include <string>
 #include "CameraModule.hpp"
+using namespace std::string;
+using namespace std::vector;
 
-int main void(){
+// region const params
+
+const string cameraPath = "/dev/hvcp2";
+const int baudrate = 9600;
+
+// endregion
+
+int main(){
     static CameraModule cameraModule = new CameraModule();
+
+    // region connect to camera module
+    cameraModule.connect();
+
+    // endregion
+
+    // region get settings
+
+    // endregion
+
+    // region loop ditect face
+
+    // endregion
 
 }
