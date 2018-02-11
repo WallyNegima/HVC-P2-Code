@@ -5,6 +5,7 @@ wiringPi/
 msgpack-c/
 libfluent/
 CMakeLists.txt
+.idea/
 
 # Compiled Object files
 *.slo
