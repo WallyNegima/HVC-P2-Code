@@ -1,0 +1,9 @@
+camera:
+  build: ./cameraModule
+  container_name: camera
+  ports:
+    - "22424:22424"
+  volumes:
+    - ./src:/root/src
+    - /dev:/dev
+  tty: true
