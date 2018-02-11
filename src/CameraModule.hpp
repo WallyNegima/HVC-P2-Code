@@ -27,16 +27,17 @@ private:
 public:
     CameraModule(string path, int baudrate);
     int connect();
-    inline vector<Result> getResults();
-    inline void setResults(vector<Result> results);
-    inline string getPath();
-    inline void setPath(string path);
-    inline int getBaudrate();
-    inline void setBaudrate(int baudrate);
-    inline int getDevice();
-    inline void setDevice(int device);
-    inline int getCommandBytes();
-    inline void setCommandBytes(int commandBytes);
+    vector<Result> getResults();
+    void setResults(vector<Result> results);
+    string getPath();
+    void setPath(string path);
+    int getBaudrate();
+    void setBaudrate(int baudrate);
+    int getDevice();
+    void setDevice(int device);
+    int getCommandBytes();
+    void setCommandBytes(int commandBytes);
+
     // endregion
 
 };
@@ -50,7 +51,7 @@ public:
  *
  * @return results
  */
-vector<Result> CameraModule::getResults(){
+inline vector<Result> CameraModule::getResults(){
     return this->results_;
 }
 
@@ -61,7 +62,7 @@ vector<Result> CameraModule::getResults(){
  *
  * @param results
  */
-void CameraModule::setResults(vector<Result> results){
+inline void CameraModule::setResults(vector<Result> results){
     this->results_ = results;
 }
 
@@ -76,7 +77,7 @@ void CameraModule::setResults(vector<Result> results){
  *
  * @return
  */
-string CameraModule::getPath(){
+inline string CameraModule::getPath(){
     return path_;
 }
 
@@ -88,7 +89,7 @@ string CameraModule::getPath(){
  *
  * @param path
  */
-void CameraModule::setPath(string path){
+inline void CameraModule::setPath(string path){
     this->path_ = path;
 }
 
@@ -103,7 +104,7 @@ void CameraModule::setPath(string path){
  *
  * @return boadrate
  */
-int CameraModule::getBaudrate(){
+inline int CameraModule::getBaudrate(){
     return this->baudrate_;
 }
 
@@ -113,7 +114,7 @@ int CameraModule::getBaudrate(){
  * ボーレートを設定
  * @param baudrate
  */
-void CameraModule::setBaudrate(int baudrate){
+inline void CameraModule::setBaudrate(int baudrate){
     this->baudrate_ = baudrate;
 }
 
@@ -128,7 +129,7 @@ void CameraModule::setBaudrate(int baudrate){
  *
  * @return device
  */
-int CameraModule::getDevice(){
+inline int CameraModule::getDevice(){
     return this->device_;
 }
 
@@ -139,7 +140,7 @@ int CameraModule::getDevice(){
  *
  * @param device
  */
-void CameraModule::setDevice(int device){
+inline void CameraModule::setDevice(int device){
     this->device_ = device;
 }
 
@@ -158,7 +159,7 @@ void CameraModule::setDevice(int device){
  *
  * @return commandBytes
  */
-int CameraModule::getCommandBytes(){
+inline int CameraModule::getCommandBytes(){
     return this->commandBytes_;
 }
 
@@ -169,7 +170,7 @@ int CameraModule::getCommandBytes(){
  *
  * @param commandBytes
  */
-void CameraModule::setCommandBytes(int commandBytes){
+inline void CameraModule::setCommandBytes(int commandBytes){
     this->commandBytes_ = commandBytes;
 }
 // endregion
