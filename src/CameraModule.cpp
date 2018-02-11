@@ -31,8 +31,12 @@ CameraModule::CameraModule(string path, int baudrate) {
  * @retun
  */
 int CameraModule::connect() {
-    string serialPath = this->path;
+    string path = this->path;
+    char* serialPath = new char[path.size() + 1]; // メモリ確保
     int baudrate = this->baudrate;
+
+    // string -> char* 変換
+    std::char_traits<char>::copy(serialPath, path.c_str(), path.size() + 1);
 
     device = serialOpen(serialPath, baudrate);
     if( device < 0 ){
@@ -41,6 +45,8 @@ int CameraModule::connect() {
         return -1;
     }
     this.setDevice(device);
+
+    delete[] serialPath; // メモリ解放
 
     return 0;
 }
