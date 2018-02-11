@@ -48,7 +48,7 @@ inline long Result::getPosX(){
  * 取得した検出結果をセット
  * @param posX
  */
-inline void Result::setPoxX(long posX){
+inline void Result::setPosX(long posX){
 	this->posX = posX;
 }
 

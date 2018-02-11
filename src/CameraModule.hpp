@@ -36,7 +36,7 @@ public:
     int getDevice();
     void setDevice(int device);
     int getCommandBytes();
-    void setCommandbytes(int commandBytes);
+    void setCommandBytes(int commandBytes);
     // endregion
 
 };
