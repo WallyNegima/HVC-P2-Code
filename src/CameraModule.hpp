@@ -13,12 +13,12 @@ using namespace std;
 class CameraModule{
     // region private params
 private:
-    std::vector<Result> results;
-    static string path;
-    static int baudrate;
-    static int device;
-    static vector<char> command;
-    static int commandBytes;
+    std::vector<Result> results_;
+    static string path_;
+    static int baudrate_;
+    static int device_;
+    static vector<char> command_;
+    static int commandBytes_;
 
     // endregion
 
@@ -27,16 +27,16 @@ private:
 public:
     CameraModule(string path, int baudrate);
     int connect();
-    vector<Result> getResults();
-    void setResults(vector<Result> results);
-    string getPath();
-    void setPath(string path);
-    int getBaudrate();
-    void setBaudrate(int baudrate);
-    int getDevice();
-    void setDevice(int device);
-    int getCommandBytes();
-    void setCommandBytes(int commandBytes);
+    inline vector<Result> getResults();
+    inline void setResults(vector<Result> results);
+    inline string getPath();
+    inline void setPath(string path);
+    inline int getBaudrate();
+    inline void setBaudrate(int baudrate);
+    inline int getDevice();
+    inline void setDevice(int device);
+    inline int getCommandBytes();
+    inline void setCommandBytes(int commandBytes);
     // endregion
 
 };
@@ -51,7 +51,7 @@ public:
  * @return results
  */
 inline vector<Result> CameraModule::getResults(){
-    return this->results;
+    return this->results_;
 }
 
 /**
@@ -62,7 +62,7 @@ inline vector<Result> CameraModule::getResults(){
  * @param results
  */
 inline void CameraModule::setResults(vector<Result> results){
-    this->results = results;
+    this->results_ = results;
 }
 
 // endregion
@@ -77,7 +77,7 @@ inline void CameraModule::setResults(vector<Result> results){
  * @return
  */
 inline string CameraModule::getPath(){
-    return this->path;
+    return path_;
 }
 
 
@@ -89,7 +89,7 @@ inline string CameraModule::getPath(){
  * @param path
  */
 inline void CameraModule::setPath(string path){
-    this->path = path;
+    this->path_ = path;
 }
 
 // endregion
@@ -104,7 +104,7 @@ inline void CameraModule::setPath(string path){
  * @return boadrate
  */
 inline int CameraModule::getBaudrate(){
-    return this->baudrate;
+    return this->baudrate_;
 }
 
 /**
@@ -114,7 +114,7 @@ inline int CameraModule::getBaudrate(){
  * @param baudrate
  */
 inline void CameraModule::setBaudrate(int baudrate){
-    this->baudrate = baudrate;
+    this->baudrate_ = baudrate;
 }
 
 // endregion
@@ -129,7 +129,7 @@ inline void CameraModule::setBaudrate(int baudrate){
  * @return device
  */
 inline int CameraModule::getDevice(){
-    return this->device;
+    return this->device_;
 }
 
 /**
@@ -140,7 +140,7 @@ inline int CameraModule::getDevice(){
  * @param device
  */
 inline void CameraModule::setDevice(int device){
-    this->device = device;
+    this->device_ = device;
 }
 
 // endregion
@@ -159,7 +159,7 @@ inline void CameraModule::setDevice(int device){
  * @return commandBytes
  */
 inline int CameraModule::getCommandBytes(){
-    return this->commandBytes;
+    return this->commandBytes_;
 }
 
 /**
@@ -170,6 +170,6 @@ inline int CameraModule::getCommandBytes(){
  * @param commandBytes
  */
 inline void CameraModule::setCommandBytes(int commandBytes){
-    this->commandBytes = commandBytes;
+    this->commandBytes_ = commandBytes;
 }
 // endregion
