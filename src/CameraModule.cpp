@@ -31,6 +31,7 @@ CameraModule::CameraModule(string path, int baudrate) {
  * モジュールにコネクトする
  * @retun
  */
+ /*
 int CameraModule::connect() {
     string path = getPath();
     char* serialPath = new char[path.size() + 1]; // メモリ確保
@@ -51,5 +52,5 @@ int CameraModule::connect() {
 
     return 0;
 }
-
+*/
 // endregion
