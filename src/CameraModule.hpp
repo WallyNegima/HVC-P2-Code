@@ -1,10 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <tclDecls.h>
 #include "Result.hpp"
 
-using namespace std::vector;
-using namespace std::string;
+using namespace std;
 
 /*
 カメラモジュール管理クラス
@@ -42,8 +42,8 @@ public:
  *
  * @return results
  */
-inline std::vector<Result> getResults(){
-    return results;
+inline vector<Result> getResults(){
+    return this->results;
 }
 
 /**
@@ -53,7 +53,7 @@ inline std::vector<Result> getResults(){
  *
  * @param results
  */
-inline void setResults(std::vector<Result> results){
+inline void setResults(vector<Result> results){
     this.results = results;
 }
 
@@ -69,7 +69,7 @@ inline void setResults(std::vector<Result> results){
  * @return
  */
 inline string getPath(){
-    return path;
+    return this->path;
 }
 
 
@@ -96,7 +96,7 @@ inline void setPath(string path){
  * @return boadrate
  */
 inline int getBaudrate(){
-    return baudrate;
+    return this->baudrate;
 }
 
 /**
@@ -121,7 +121,7 @@ inline void setBaudrate(int baudrate){
  * @return device
  */
 inline int getDevice(){
-    return device;
+    return this->device;
 }
 
 /**
@@ -151,7 +151,7 @@ inline void setDevice(int device){
  * @return commandBytes
  */
 inline int getCommandBytes(){
-    return commandBytes;
+    return this->commandBytes;
 }
 
 /**

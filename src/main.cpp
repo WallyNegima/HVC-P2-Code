@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <iostream>
-#include <string>
 #include "CameraModule.hpp"
-using namespace std::string;
-using namespace std::vector;
+using namespace std;
+//using namespace std::vector;
 
 // region const params
 

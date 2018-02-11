@@ -31,7 +31,7 @@ public :
  * @return posX
  */
 inline long Result::getPosX(){
-	return posX;
+	return this->posX;
 }
 
 /**
@@ -41,7 +41,7 @@ inline long Result::getPosX(){
  * @param posX
  */
 inline void Result::setPoxX(long posX){
-	this.posX = posX;
+	this->posX = posX;
 }
 
 // endregion
@@ -55,7 +55,7 @@ inline void Result::setPoxX(long posX){
  * @return posY
  */
 inline long Result::getPosY(){
-	return posY;
+	return this->posY;
 }
 
 /**
@@ -65,7 +65,7 @@ inline long Result::getPosY(){
  * @param posY
  */
 inline void Result::setPosY(long posY){
-	this.posY = posY;
+	this->posY = posY;
 }
 
 // endregion
@@ -81,7 +81,7 @@ inline void Result::setPosY(long posY){
  * @return
  */
 inline long Result::getSize(){
-	return size;
+	return this->size;
 }
 
 /**
@@ -91,7 +91,7 @@ inline long Result::getSize(){
  * @param size
  */
 inline void Result::setSize(long size){
-	this.size = size;
+	this->size = size;
 }
 
 // endregion
@@ -105,7 +105,7 @@ inline void Result::setSize(long size){
  * @return confidence
  */
 inline void Result::getConfidence(){
-	return confidence;
+	return this->confidence;
 }
 
 /**
@@ -115,7 +115,7 @@ inline void Result::getConfidence(){
  * @param confidence
  */
 inline void Result::setConfidence(long confidence{
-    this.confidence = confidence;
+    this->confidence = confidence;
 }
 
 // endregion
