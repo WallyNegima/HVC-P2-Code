@@ -112,7 +112,7 @@ inline void Result::setSize(long size){
  * 検出した物体の信頼度を取得
  * @return confidence
  */
-inline void Result::getConfidence(){
+inline long Result::getConfidence(){
 	return this->confidence;
 }
 
