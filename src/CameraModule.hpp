@@ -27,7 +27,16 @@ private:
 public:
     CameraModule(string path, int baudrate);
     int connect();
-
+    vector<Result> getResults();
+    void setResults(vector<Result> results);
+    string getPath();
+    void setPath(string path);
+    int getBaudrate();
+    void setBaudrate(int baudrate);
+    int getDevice();
+    void setDevice(int device);
+    int getCommandBytes();
+    void setCommandbytes(int commandBytes);
     // endregion
 
 };
