@@ -1,4 +1,6 @@
-/*
+#include <iostream>
+
+/**
 検出結果を格納するクラス
 */
 class Result{

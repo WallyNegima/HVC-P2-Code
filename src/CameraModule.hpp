@@ -1,7 +1,8 @@
 #include <iostream>
-#include <vevtor>
+#include <vector>
 #include <string>
 #include "Result.hpp"
+
 using namespace std::vector;
 using namespace std::string;
 
