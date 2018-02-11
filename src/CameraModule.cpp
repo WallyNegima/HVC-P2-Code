@@ -1,9 +1,9 @@
-#include <iostream.h>
-#include <string.h>
+#include <iostream>
+#include <string>
 #include <wiringPi.h>
 #include <wiringSerial.h>
 #include "CameraModule.hpp"
-using namespace std::string;
+using namespace std;
 
 //methods
 
