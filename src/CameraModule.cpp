@@ -8,6 +8,7 @@ using namespace std;
 //methods
 
 // region コンストラクタ
+
 /**
  * CameraModule.
  *
