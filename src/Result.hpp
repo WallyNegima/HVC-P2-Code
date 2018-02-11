@@ -114,7 +114,7 @@ inline void Result::getConfidence(){
  * 検出した物体の信頼度をオブジェクトにセット
  * @param confidence
  */
-inline void Result::setConfidence(long confidence{
+inline void Result::setConfidence(long confidence){
     this->confidence = confidence;
 }
 
