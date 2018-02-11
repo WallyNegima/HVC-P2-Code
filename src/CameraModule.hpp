@@ -50,7 +50,7 @@ public:
  *
  * @return results
  */
-inline vector<Result> CameraModule::getResults(){
+vector<Result> CameraModule::getResults(){
     return this->results_;
 }
 
@@ -61,7 +61,7 @@ inline vector<Result> CameraModule::getResults(){
  *
  * @param results
  */
-inline void CameraModule::setResults(vector<Result> results){
+void CameraModule::setResults(vector<Result> results){
     this->results_ = results;
 }
 
@@ -76,7 +76,7 @@ inline void CameraModule::setResults(vector<Result> results){
  *
  * @return
  */
-inline string CameraModule::getPath(){
+string CameraModule::getPath(){
     return path_;
 }
 
@@ -88,7 +88,7 @@ inline string CameraModule::getPath(){
  *
  * @param path
  */
-inline void CameraModule::setPath(string path){
+void CameraModule::setPath(string path){
     this->path_ = path;
 }
 
@@ -103,7 +103,7 @@ inline void CameraModule::setPath(string path){
  *
  * @return boadrate
  */
-inline int CameraModule::getBaudrate(){
+int CameraModule::getBaudrate(){
     return this->baudrate_;
 }
 
@@ -113,7 +113,7 @@ inline int CameraModule::getBaudrate(){
  * ボーレートを設定
  * @param baudrate
  */
-inline void CameraModule::setBaudrate(int baudrate){
+void CameraModule::setBaudrate(int baudrate){
     this->baudrate_ = baudrate;
 }
 
@@ -128,7 +128,7 @@ inline void CameraModule::setBaudrate(int baudrate){
  *
  * @return device
  */
-inline int CameraModule::getDevice(){
+int CameraModule::getDevice(){
     return this->device_;
 }
 
@@ -139,7 +139,7 @@ inline int CameraModule::getDevice(){
  *
  * @param device
  */
-inline void CameraModule::setDevice(int device){
+void CameraModule::setDevice(int device){
     this->device_ = device;
 }
 
@@ -158,7 +158,7 @@ inline void CameraModule::setDevice(int device){
  *
  * @return commandBytes
  */
-inline int CameraModule::getCommandBytes(){
+int CameraModule::getCommandBytes(){
     return this->commandBytes_;
 }
 
@@ -169,7 +169,7 @@ inline int CameraModule::getCommandBytes(){
  *
  * @param commandBytes
  */
-inline void CameraModule::setCommandBytes(int commandBytes){
+void CameraModule::setCommandBytes(int commandBytes){
     this->commandBytes_ = commandBytes;
 }
 // endregion
