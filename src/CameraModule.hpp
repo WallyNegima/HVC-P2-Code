@@ -13,12 +13,12 @@ using namespace std;
 class CameraModule{
   // region private params
 private:
-  std::vector<Result> results_;
-  static string path_;
-  static int baudrate_;
-  static int device_;
-  static vector<char> command_;
-  static int commandBytes_;
+  vector<Result> results_;
+  string path_;
+  int baudrate_;
+  int device_;
+  vector<char> command_;
+  int commandBytes_;
 
   // endregion
 
