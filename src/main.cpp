@@ -12,21 +12,21 @@ const int baudrate = 9600;
 // endregion
 
 int main(){
-    CameraModule* cameraModule = new CameraModule(cameraPath, baudrate);
+  CameraModule* cameraModule = new CameraModule();
 
-    // region connect to camera module
+  // region connect to camera module
 
-    cameraModule->connect();
-    //cout << cameraModule->getPath();
+  cameraModule->connect(cameraPath, baudrate);
 
-    // endregion
 
-    // region get settings
+  // endregion
 
-    // endregion
+  // region get settings
 
-    // region loop ditect face
+  // endregion
 
-    // endregion
+  // region loop ditect face
+
+  // endregion
 
 }

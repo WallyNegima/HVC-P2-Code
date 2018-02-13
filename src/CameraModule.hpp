@@ -1,7 +1,6 @@
-#include <vector>
 #include <string>
+#include <vector>
 #include "Result.hpp"
-#include <iostream>
 
 using namespace std;
 
@@ -14,8 +13,6 @@ class CameraModule{
   // region private params
 private:
   vector<Result> results_;
-  string path_;
-  int baudrate_;
   int device_;
   vector<char> command_;
   int commandBytes_;
@@ -25,14 +22,10 @@ private:
   // region public params
 
 public:
-  CameraModule(string path, int baudrate);
-  int connect();
+  CameraModule();
+  int connect(string& path, int baudrate);
   vector<Result> getResults();
   void setResults(vector<Result> results);
-  string getPath();
-  void setPath(string path);
-  int getBaudrate();
-  void setBaudrate(int baudrate);
   int getDevice();
   void setDevice(int device);
   int getCommandBytes();
@@ -64,58 +57,6 @@ inline vector<Result> CameraModule::getResults(){
  */
 inline void CameraModule::setResults(vector<Result> results){
   results_ = results;
-}
-
-// endregion
-
-// region path accessor
-
-/**
- * getPath.
- * <p>
- * モジュールのパスを取得
- *
- * @return
- */
-inline string CameraModule::getPath(){
-  return path_;
-}
-
-
-/**
- * setPath.
- * <p>
- * モジュールへのパスをセット
- *
- * @param path
- */
-inline void CameraModule::setPath(string path){
-  path_ = path;
-}
-
-// endregion
-
-// region baudrate accessor
-
-/**
- * getBoadrate.
- * <p>
- * ボーレートを取得
- *
- * @return boadrate
- */
-inline int CameraModule::getBaudrate(){
-  return baudrate_;
-}
-
-/**
- * setBaudrate.
- * <p>
- * ボーレートを設定
- * @param baudrate
- */
-inline void CameraModule::setBaudrate(int baudrate){
-  baudrate_ = baudrate;
 }
 
 // endregion

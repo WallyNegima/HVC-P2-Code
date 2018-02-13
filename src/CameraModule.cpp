@@ -1,5 +1,5 @@
+#pragma once
 #include <iostream>
-#include <string>
 #include "CameraModule.hpp"
 #include <wiringPi.h>
 #include <wiringSerial.h>
@@ -16,9 +16,7 @@ using namespace std;
  * @param path /dev/hvcp2 などのモジュールへのパス
  * @param boadrate ボーレート.USBなら9600固定
  */
-CameraModule::CameraModule(string path, int baudrate) {
-    path_ = path;
-    baudrate_ = baudrate;
+CameraModule::CameraModule() {
 }
 
 // endregion
@@ -32,22 +30,15 @@ CameraModule::CameraModule(string path, int baudrate) {
  * @retun
  */
 
-int CameraModule::connect() {
-   string path = path_;
-   char* serialPath = new char[path.size() + 1]; // メモリ確保
+int CameraModule::connect(string& path, int baudrate) {
 
-   // string -> char* 変換
-   std::char_traits<char>::copy(serialPath, path.c_str(), path.size() + 1);
-
-   int device = serialOpen(serialPath, baudrate_);
-   if( device < 0 ){
+   int device_ = serialOpen(path.c_str(), baudrate);
+   if( device_ < 0 ){
        // シリアルオープンに失敗
        cerr << "cannot open " <<  serialPath;
        return -1;
    }
-   device_ = device;
-   delete[] serialPath; // メモリ解放
 
-   return 0;
+   return device_;
 }
 // endregion
