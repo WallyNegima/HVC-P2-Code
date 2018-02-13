@@ -15,8 +15,9 @@ int main(){
     CameraModule* cameraModule = new CameraModule(cameraPath, baudrate);
 
     // region connect to camera module
-    //cameraModule->connect();
-    cout << cameraModule->getPath();
+
+    cameraModule->connect();
+    //cout << cameraModule->getPath();
 
     // endregion
 
