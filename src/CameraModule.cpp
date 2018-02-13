@@ -29,12 +29,12 @@ CameraModule::CameraModule() {
  * @retun
  */
 
-int CameraModule::connect(string& path, int baudrate) {
+int CameraModule::connect(string path, int baudrate) {
 
-   int device_ = serialOpen(path.c_str(), baudrate);
+   device_ = serialOpen(path.c_str(), baudrate);
    if( device_ < 0 ){
        // シリアルオープンに失敗
-       cerr << "cannot open " <<  serialPath;
+       cerr << "cannot open " <<  path;
        return -1;
    }
 
