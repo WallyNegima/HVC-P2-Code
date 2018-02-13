@@ -17,8 +17,8 @@ using namespace std;
  * @param boadrate ボーレート.USBなら9600固定
  */
 CameraModule::CameraModule(string path, int baudrate) {
-    setPath(path);
-    setBaudrate(baudrate);
+    path_ = path;
+    baudrate_ = baudrate;
 }
 
 // endregion
@@ -33,21 +33,19 @@ CameraModule::CameraModule(string path, int baudrate) {
  */
  /*
 int CameraModule::connect() {
-    string path = getPath();
+    string path = path_;
     char* serialPath = new char[path.size() + 1]; // メモリ確保
-    int baudrate = getBaudrate();
 
     // string -> char* 変換
     std::char_traits<char>::copy(serialPath, path.c_str(), path.size() + 1);
 
-    int device = serialOpen(serialPath, baudrate);
+    int device = serialOpen(serialPath, baudrate_);
     if( device < 0 ){
         // シリアルオープンに失敗
         cerr << "cannot open " <<  serialPath;
         return -1;
     }
-    setDevice(device);
-
+    device_ = device;
     delete[] serialPath; // メモリ解放
 
     return 0;

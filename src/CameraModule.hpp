@@ -27,142 +27,151 @@ private:
 public:
     CameraModule(string path, int baudrate);
     int connect();
-    
-    // region Results accessor
-
-    /**
-     * getResults.
-     * <p>
-     * 検出結果を取得する
-     *
-     * @return results
-     */
-    vector<Result> getResults(){
-        return this->results_;
-    }
-
-    /**
-     * setResults.
-     * <p>
-     * 検出結果をオブジェクトに格納
-     *
-     * @param results
-     */
-    void setResults(vector<Result> results){
-        this->results_ = results;
-    }
-
-    // endregion
-
-
-    // region path accessor
-    
-    /**
-     * getPath.
-     * <p>
-     * モジュールのパスを取得
-     *
-     * @return
-     */
-    string getPath(){
-        return path_;
-    }
-    
-    /**
-     * setPath.
-     * <p>
-     * モジュールへのパスをセット
-     *
-     * @param path
-     */
-    void setPath(string path){
-        this->path_ = path;
-    }
-
-    // endregion
-    
-    // region baudrate accessor
-    
-    /**
-     * getBoadrate.
-     * <p>
-     * ボーレートを取得
-     *
-     * @return boadrate
-     */
-    int getBaudrate(){
-        return this->baudrate_;
-    }
-    
-    /**
-     * setBaudrate.
-     * <p>
-     * ボーレートを設定
-     * @param baudrate
-     */
-    void setBaudrate(int baudrate){
-        this->baudrate_ = baudrate;
-    }
-    
-    // endregion
-    
-    // region device accessor
-    
-    /**
-     * getDevice.
-     * <p>
-     * シリアルオープン後のデバイスIDを取得
-     *
-     * @return device
-     */
-    int getDevice(){
-        return this->device_;
-    }
-
-    /**
-     * setDevice.
-     * <p>
-     * デバイスIDをセット
-     *
-     * @param device
-     */
-    void setDevice(int device){
-        this->device_ = device;
-    }
-
-    // endregion
-    
-    // region command accessor
-    
-    // endregion
-    
-    // region commandBytes accessor
-    
-    /**
-     * getCommandbytes.
-     * <p>
-     * モジュールに送信するコマンドのバイト数を取得
-     *
-     * @return commandBytes
-     */
-    int getCommandBytes(){
-        return this->commandBytes_;
-    }
-
-    /**
-     * setCommandBytes.
-     * <p>
-     * モジュールに送信するコマンドのバイト数をセット
-     *
-     * @param commandBytes
-     */
-    void setCommandBytes(int commandBytes){
-        this->commandBytes_ = commandBytes;
-    }
-    // endregion
+    vector<Result> getResults();
+    void setResults(vector<Result> results);
+    string getPath();
+    void setPath(string path);
+    int getBaudrate();
+    void setBaudrate(int baudrate);
+    int getDevice();
+    void setDevice(int device);
+    int getCommandBytes();
+    void setCommandBytes(int commandBytes);
 
     // endregion
 
 };
 
+// region Results accessor
+
+/**
+ * getResults.
+ * <p>
+ * 検出結果を取得する
+ *
+ * @return results
+ */
+inline vector<Result> CameraModule::getResults(){
+    return results_;
+}
+
+/**
+ * setResults.
+ * <p>
+ * 検出結果をオブジェクトに格納
+ *
+ * @param results
+ */
+inline void CameraModule::setResults(vector<Result> results){
+    results_ = results;
+}
+
+// endregion
+
+// region path accessor
+
+/**
+ * getPath.
+ * <p>
+ * モジュールのパスを取得
+ *
+ * @return
+ */
+inline string CameraModule::getPath(){
+    return path_;
+}
+
+
+/**
+ * setPath.
+ * <p>
+ * モジュールへのパスをセット
+ *
+ * @param path
+ */
+inline void CameraModule::setPath(string path){
+    path_ = path;
+}
+
+// endregion
+
+// region baudrate accessor
+
+/**
+ * getBoadrate.
+ * <p>
+ * ボーレートを取得
+ *
+ * @return boadrate
+ */
+inline int CameraModule::getBaudrate(){
+    return baudrate_;
+}
+
+/**
+ * setBaudrate.
+ * <p>
+ * ボーレートを設定
+ * @param baudrate
+ */
+inline void CameraModule::setBaudrate(int baudrate){
+    baudrate_ = baudrate;
+}
+
+// endregion
+
+// region device accessor
+
+/**
+ * getDevice.
+ * <p>
+ * シリアルオープン後のデバイスIDを取得
+ *
+ * @return device
+ */
+inline int CameraModule::getDevice(){
+    return this->device_;
+}
+
+/**
+ * setDevice.
+ * <p>
+ * デバイスIDをセット
+ *
+ * @param device
+ */
+inline void CameraModule::setDevice(int device){
+    device_ = device;
+}
+
+// endregion
+
+// region command accessor
+
+// endregion
+
+// region commandBytes accessor
+
+/**
+ * getCommandbytes.
+ * <p>
+ * モジュールに送信するコマンドのバイト数を取得
+ *
+ * @return commandBytes
+ */
+inline int CameraModule::getCommandBytes(){
+    return commandBytes_;
+}
+
+/**
+ * setCommandBytes.
+ * <p>
+ * モジュールに送信するコマンドのバイト数をセット
+ *
+ * @param commandBytes
+ */
+inline void CameraModule::setCommandBytes(int commandBytes){
+    commandBytes_ = commandBytes;
+}
+// endregion
 
