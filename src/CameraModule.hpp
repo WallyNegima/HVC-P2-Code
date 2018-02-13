@@ -20,14 +20,21 @@ private:
   int device_;
   vector<char> command_;
   int commandBytes_;
+  void setHeader(vector<char> *command);
+  void sendCommand();
+  vector<char> getResponse();
 
   // endregion
 
   // region public params
 
 public:
+  static const int CMD_GET_VERSIONS = 0;
+  static const int CMD_GET_CAMERA_DIRECTION = 1;
   CameraModule();
   int connect(string path, int baudrate);
+  vector<char> getDeviceInformation(int cmd);
+  // accessor
   vector<Result> getResults();
   void setResults(vector<Result> results);
   int getDevice();

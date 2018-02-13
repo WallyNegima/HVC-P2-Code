@@ -17,7 +17,6 @@ int main(){
 
   cameraModule->connect(cameraPath, baudrate);
 
-
   // endregion
 
   // region get settings
