@@ -12,6 +12,7 @@ const int baudrate = 9600;
 
 int main(){
   CameraModule* cameraModule = new CameraModule();
+  vector<char> response;
 
   // region connect to camera module
 
@@ -20,6 +21,11 @@ int main(){
   // endregion
 
   // region get settings
+  
+  response = cameraModule->getDeviceInformation(CameraModule::CMD_GET_VERSIONS);
+  for(auto itr = response.begin(); itr != response.end(); ++itr){
+    printf("0x%02X", *itr);
+  }
 
   // endregion
 

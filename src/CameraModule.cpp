@@ -53,15 +53,15 @@ int CameraModule::connect(string path, int baudrate) {
 void CameraModule::sendCommand(){
 
   // 送受信中の情報を全て消去
-  serialFlash(device_);
+  serialFlush(device_);
 
   // command_ にある全てのコマンド情報を送信
   for(auto itr = command_.begin(); itr != command_.end(); ++itr ){
-    serialPutchar(device_, itr);
+    serialPutchar(device_, *itr);
   }
 
   //レスポンスまで少し時間がかかるため, まつ
-  delay(300);
+  delay(500);
 
 }
 
@@ -132,7 +132,7 @@ void CameraModule::setHeader(vector<char> *command) {
 
   command->clear();
   command->push_back(0xFE);
-  command->push_back(0x20);
+  command->push_back(0x00);
   command->push_back(0x00);
   command->push_back(0x00);
 
