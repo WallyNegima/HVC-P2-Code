@@ -1,4 +1,3 @@
-#pragma once
 #include <iostream>
 #include "CameraModule.hpp"
 #include <wiringPi.h>

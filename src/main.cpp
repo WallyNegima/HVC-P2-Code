@@ -2,7 +2,6 @@
 #include <iostream>
 #include "CameraModule.hpp"
 using namespace std;
-//using namespace std::vector;
 
 // region const params
 

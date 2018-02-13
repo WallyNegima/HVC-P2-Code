@@ -1,16 +1,20 @@
+#pragma once
+
 #include <string>
 #include <vector>
 #include "Result.hpp"
 
 using namespace std;
 
-/*
+/**
 カメラモジュール管理クラス
 コマンドの送信
 応答の受信,管理など
 */
 class CameraModule{
+
   // region private params
+
 private:
   vector<Result> results_;
   int device_;
