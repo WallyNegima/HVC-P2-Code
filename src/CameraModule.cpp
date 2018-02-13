@@ -31,24 +31,24 @@ CameraModule::CameraModule(string path, int baudrate) {
  * モジュールにコネクトする
  * @retun
  */
- /*
+/*
 int CameraModule::connect() {
-    string path = path_;
-    char* serialPath = new char[path.size() + 1]; // メモリ確保
+   string path = path_;
+   char* serialPath = new char[path.size() + 1]; // メモリ確保
 
-    // string -> char* 変換
-    std::char_traits<char>::copy(serialPath, path.c_str(), path.size() + 1);
+   // string -> char* 変換
+   std::char_traits<char>::copy(serialPath, path.c_str(), path.size() + 1);
 
-    int device = serialOpen(serialPath, baudrate_);
-    if( device < 0 ){
-        // シリアルオープンに失敗
-        cerr << "cannot open " <<  serialPath;
-        return -1;
-    }
-    device_ = device;
-    delete[] serialPath; // メモリ解放
+   int device = serialOpen(serialPath, baudrate_);
+   if( device < 0 ){
+       // シリアルオープンに失敗
+       cerr << "cannot open " <<  serialPath;
+       return -1;
+   }
+   device_ = device;
+   delete[] serialPath; // メモリ解放
 
-    return 0;
+   return 0;
 }
 */
 // endregion
