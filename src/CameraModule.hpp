@@ -1,35 +1,41 @@
-#include <iostream>
-#include <vector>
+#pragma once
+
 #include <string>
+#include <vector>
 #include "Result.hpp"
 
-using namespace std::vector;
-using namespace std::string;
+using namespace std;
 
-/*
+/**
 カメラモジュール管理クラス
 コマンドの送信
 応答の受信,管理など
 */
 class CameraModule{
-    // region private params
+
+  // region private params
+
 private:
-    std::vector<Result> results;
-    static string path;
-    static int baudrate;
-    static int device;
-    static vector<char> command;
-    static int commandBytes;
+  vector<Result> results_;
+  int device_;
+  vector<char> command_;
+  int commandBytes_;
 
-    // endregion
+  // endregion
 
-    // region public params
+  // region public params
 
 public:
-    CameraModule(string path, int baudrate);
-    int connect();
+  CameraModule();
+  int connect(string path, int baudrate);
+  vector<Result> getResults();
+  void setResults(vector<Result> results);
+  int getDevice();
+  void setDevice(int device);
+  int getCommandBytes();
+  void setCommandBytes(int commandBytes);
 
-    // endregion
+  // endregion
 
 };
 
@@ -42,8 +48,8 @@ public:
  *
  * @return results
  */
-inline std::vector<Result> getResults(){
-    return results;
+inline vector<Result> CameraModule::getResults(){
+  return results_;
 }
 
 /**
@@ -53,60 +59,8 @@ inline std::vector<Result> getResults(){
  *
  * @param results
  */
-inline void setResults(std::vector<Result> results){
-    this.results = results;
-}
-
-// endregion
-
-// region path accessor
-
-/**
- * getPath.
- * <p>
- * モジュールのパスを取得
- *
- * @return
- */
-inline string getPath(){
-    return path;
-}
-
-
-/**
- * setPath.
- * <p>
- * モジュールへのパスをセット
- *
- * @param path
- */
-inline void setPath(string path){
-    this->path = path;
-}
-
-// endregion
-
-// region baudrate accessor
-
-/**
- * getBoadrate.
- * <p>
- * ボーレートを取得
- *
- * @return boadrate
- */
-inline int getBaudrate(){
-    return baudrate;
-}
-
-/**
- * setBaudrate.
- * <p>
- * ボーレートを設定
- * @param baudrate
- */
-inline void setBaudrate(int baudrate){
-    this->baudrate = baudrate;
+inline void CameraModule::setResults(vector<Result> results){
+  results_ = results;
 }
 
 // endregion
@@ -120,8 +74,8 @@ inline void setBaudrate(int baudrate){
  *
  * @return device
  */
-inline int getDevice(){
-    return device;
+inline int CameraModule::getDevice(){
+  return this->device_;
 }
 
 /**
@@ -131,8 +85,8 @@ inline int getDevice(){
  *
  * @param device
  */
-inline void setDevice(int device){
-    this->device = device;
+inline void CameraModule::setDevice(int device){
+  device_ = device;
 }
 
 // endregion
@@ -150,8 +104,8 @@ inline void setDevice(int device){
  *
  * @return commandBytes
  */
-inline int getCommandBytes(){
-    return commandBytes;
+inline int CameraModule::getCommandBytes(){
+  return commandBytes_;
 }
 
 /**
@@ -161,7 +115,8 @@ inline int getCommandBytes(){
  *
  * @param commandBytes
  */
-inline void setCommandBytes(int commandBytes){
-    this->commandBytes = commandBytes;
+inline void CameraModule::setCommandBytes(int commandBytes){
+  commandBytes_ = commandBytes;
 }
 // endregion
+

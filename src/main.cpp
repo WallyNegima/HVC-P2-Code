@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <iostream>
-#include <string>
 #include "CameraModule.hpp"
-using namespace std::string;
-using namespace std::vector;
+using namespace std;
 
 // region const params
 
@@ -13,19 +11,21 @@ const int baudrate = 9600;
 // endregion
 
 int main(){
-    static CameraModule cameraModule = new CameraModule();
+  CameraModule* cameraModule = new CameraModule();
 
-    // region connect to camera module
-    cameraModule.connect();
+  // region connect to camera module
 
-    // endregion
+  cameraModule->connect(cameraPath, baudrate);
 
-    // region get settings
 
-    // endregion
+  // endregion
 
-    // region loop ditect face
+  // region get settings
 
-    // endregion
+  // endregion
+
+  // region loop ditect face
+
+  // endregion
 
 }

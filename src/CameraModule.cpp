@@ -1,13 +1,13 @@
-#include <iostream.h>
-#include <string.h>
+#include <iostream>
+#include "CameraModule.hpp"
 #include <wiringPi.h>
 #include <wiringSerial.h>
-#include "CameraModule.hpp"
-using namespace std::string;
+using namespace std;
 
 //methods
 
 // region コンストラクタ
+
 /**
  * CameraModule.
  *
@@ -15,9 +15,7 @@ using namespace std::string;
  * @param path /dev/hvcp2 などのモジュールへのパス
  * @param boadrate ボーレート.USBなら9600固定
  */
-CameraModule::CameraModule(string path, int baudrate) {
-    this->path = path;
-    this->baudrate = baudrate;
+CameraModule::CameraModule() {
 }
 
 // endregion
@@ -30,25 +28,16 @@ CameraModule::CameraModule(string path, int baudrate) {
  * モジュールにコネクトする
  * @retun
  */
-int CameraModule::connect() {
-    string path = this->path;
-    char* serialPath = new char[path.size() + 1]; // メモリ確保
-    int baudrate = this->baudrate;
 
-    // string -> char* 変換
-    std::char_traits<char>::copy(serialPath, path.c_str(), path.size() + 1);
+int CameraModule::connect(string path, int baudrate) {
 
-    device = serialOpen(serialPath, baudrate);
-    if( device < 0 ){
-        // シリアルオープンに失敗
-        cerr << "cannot open " + serialPath;
-        return -1;
-    }
-    this.setDevice(device);
+   device_ = serialOpen(path.c_str(), baudrate);
+   if( device_ < 0 ){
+       // シリアルオープンに失敗
+       cerr << "cannot open " <<  path;
+       return -1;
+   }
 
-    delete[] serialPath; // メモリ解放
-
-    return 0;
+   return device_;
 }
-
 // endregion

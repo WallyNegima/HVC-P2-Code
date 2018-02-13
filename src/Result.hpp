@@ -1,4 +1,4 @@
-#include <iostream>
+#pragma once
 
 /**
 検出結果を格納するクラス
@@ -8,15 +8,23 @@ class Result{
     // region private params
 
 private:
-	long posX;
-	long posY;
-	long size;
-	long confidence;
+	long posX_;
+	long posY_;
+	long size_;
+	long confidence_;
 
     // endregion
 
     // region public params
 public :
+	long getPosX();
+	void setPosX(long posX);
+	long getPosY();
+	void setPosY(long posY);
+	long getSize();
+	void setSize(long size);
+	long getConfidence();
+	void setConfidence(long confidence);
 
     // endregion
 
@@ -31,7 +39,7 @@ public :
  * @return posX
  */
 inline long Result::getPosX(){
-	return posX;
+	return this->posX_;
 }
 
 /**
@@ -40,8 +48,8 @@ inline long Result::getPosX(){
  * 取得した検出結果をセット
  * @param posX
  */
-inline void Result::setPoxX(long posX){
-	this.posX = posX;
+inline void Result::setPosX(long posX){
+	this->posX_ = posX;
 }
 
 // endregion
@@ -55,7 +63,7 @@ inline void Result::setPoxX(long posX){
  * @return posY
  */
 inline long Result::getPosY(){
-	return posY;
+	return this->posY_;
 }
 
 /**
@@ -65,7 +73,7 @@ inline long Result::getPosY(){
  * @param posY
  */
 inline void Result::setPosY(long posY){
-	this.posY = posY;
+	this->posY_ = posY;
 }
 
 // endregion
@@ -81,7 +89,7 @@ inline void Result::setPosY(long posY){
  * @return
  */
 inline long Result::getSize(){
-	return size;
+	return this->size_;
 }
 
 /**
@@ -91,7 +99,7 @@ inline long Result::getSize(){
  * @param size
  */
 inline void Result::setSize(long size){
-	this.size = size;
+	this->size_ = size;
 }
 
 // endregion
@@ -104,8 +112,8 @@ inline void Result::setSize(long size){
  * 検出した物体の信頼度を取得
  * @return confidence
  */
-inline void Result::getConfidence(){
-	return confidence;
+inline long Result::getConfidence(){
+	return this->confidence_;
 }
 
 /**
@@ -114,8 +122,8 @@ inline void Result::getConfidence(){
  * 検出した物体の信頼度をオブジェクトにセット
  * @param confidence
  */
-inline void Result::setConfidence(long confidence{
-    this.confidence = confidence;
+inline void Result::setConfidence(long confidence){
+    this->confidence_ = confidence;
 }
 
 // endregion
