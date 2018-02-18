@@ -148,6 +148,7 @@ void CameraModule::responseAnalyze(int func, vector<char> *response) {
       cerr << response->size() << "\n";
 
       // データ長さ取得
+      long responseDataSize = getResponseBytes(response);
       
       int bodyNum = response->at(0);
       int handNum = response->at(1);
@@ -294,8 +295,39 @@ bool CameraModule::hasHeaderErr(vector<char> *response) {
 
 // endregion
 
+// region getResponseBytes レスポンスのデータ長を取得
+
+/**
+ * getResponseBytes.
+ * <p>
+ * レスポンスのデータ長を返す
+ *
+ * @param response
+ * @return
+ */
+long CameraModule::getResponseBytes(vector<char> *response) {
+
+  if(response->empty()){
+    return -1;
+  }
+
+  long dataSize = response->at(0) | response->at(1)<<8 |response->at(2)<<16 | response->at(3)<<24;
+  response->erase(response->begin(), response->begin() + 3);
+
+  return dataSize;
+}
+
+// endregion
+
 // region getLongFromResponse 2バイト読み込んでlongで返す
 
+/**
+ * getLongFromResponse.
+ * <p>
+ * レスポンス列のうち, LSB|MSB と並んでいるものを整形して数字で返す
+ * @param response
+ * @return
+ */
 long CameraModule::getLongFromResponse(vector<char> *response) {
 
   // 空っぽならエラーで, -1を返す

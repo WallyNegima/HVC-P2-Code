@@ -26,6 +26,7 @@ private:
   void sendCommand();
   vector<char> getResponse();
   bool hasHeaderErr(vector<char> *response);
+  long getResponseBytes(vector<char> *response);
   long getLongFromResponse(vector<char> *response);
 
   // endregion
