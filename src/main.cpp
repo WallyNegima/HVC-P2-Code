@@ -25,9 +25,6 @@ int main(){
     response = cameraModule->getDeviceInformation(CameraModule::CMD_GET_VERSIONS);
   }
   cout << "Camera version\n";
-  for(auto itr = response.begin(); itr != response.end(); ++itr){
-    printf("0x%02X", *itr);
-  }
 
   // endregion
 

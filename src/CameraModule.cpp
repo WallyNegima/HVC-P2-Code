@@ -39,6 +39,8 @@ int CameraModule::connect(string path, int baudrate) {
     return -1;
   }
 
+  cerr << "connected!";
+
   return device_;
 }
 
