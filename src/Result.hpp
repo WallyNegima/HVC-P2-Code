@@ -17,6 +17,7 @@ private:
 
     // region public params
 public :
+  Result();
 	long getPosX();
 	void setPosX(long posX);
 	long getPosY();

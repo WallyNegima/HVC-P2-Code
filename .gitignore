@@ -6,6 +6,8 @@ msgpack-c/
 libfluent/
 CMakeLists.txt
 .idea/
+cmake-build-debug/
+CMakeLists.txt
 
 # Compiled Object files
 *.slo
