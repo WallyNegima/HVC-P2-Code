@@ -50,7 +50,7 @@ int main(){
     cout << "Confidence :" << itr->getConfidence() << "\n";
     cout << "hDirection :" << itr->getHorizontalDirection() << "\n";
     cout << "vDirection :" << itr->getVerticalDirection() << "\n";
-    cout << "inclination:" << itr->getInclination() < , "\n";
+    cout << "inclination:" << itr->getInclination() << "\n";
     cout << "age        :" << itr->getAge() << "\n";
     cout << "sex        :" << itr->getSex() << "\n";
     cout << "hSight     :" << itr->getHorizontalSight() << "\n";
