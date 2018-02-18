@@ -52,7 +52,7 @@ public:
   int connect(string path, int baudrate);
   vector<char> getDeviceInformation(int cmd);
   vector<char> detectObject(char option1, char option2, char imageOption);
-  void responseAnalyze(int func, vector<char>);
+  void responseAnalyze(int func, vector<char> *response);
   // accessor
   vector<Result> getBodyResults();
   void setBodyResults(vector<Result> results);
