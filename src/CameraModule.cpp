@@ -138,22 +138,26 @@ void CameraModule::responseAnalyze(int func, vector<char> *response) {
     case (CameraModule::DETECT_RESPONSE) :{
       // 物体検出結果を分析
 
+      cerr << "\n" << response->size() << "\n";
+      
       // エラー検出
       if (hasHeaderErr(response)) {
         break;
       }
+      
+      cerr << response->size() << "\n";
 
       // データ長さ取得
-      int bodyNum = (int)response->front();
-      response->erase(response->begin());
-      int handNum = (int)response->front();
-      response->erase(response->begin());
-      int faceNum = (int)response->front();
-      response->erase(response->begin());
+      
+      int bodyNum = response->at(0);
+      int handNum = response->at(1);
+      int faceNum = response->at(2);
 
       // 0で固定されている分を削除 カメラモジュールの仕様.
-      response->erase(response->begin());
+      response->erase(response->begin() , response->begin() + 4);
 
+      cerr << response->size() << "\n";
+      cerr << bodyNum << ", " << handNum << ", " << faceNum << "\n";
 
       // 検出した体情報をbodyResultsに格納
       for(int i=0; i<bodyNum; i++){
@@ -165,7 +169,7 @@ void CameraModule::responseAnalyze(int func, vector<char> *response) {
         bodyResults_.push_back(result);
       }
 
-      // 検出した体情報をbodyResultsに格納
+      // 検出した体情報をhandResultsに格納
       for(int i=0; i<handNum; i++){
         Result result;
         result.setPosX(getLongFromResponse(response));
@@ -175,7 +179,7 @@ void CameraModule::responseAnalyze(int func, vector<char> *response) {
         handResults_.push_back(result);
       }
 
-      // 検出した体情報をbodyResultsに格納
+      // 検出した体情報をfaceResultsに格納
       for(int i=0; i<faceNum; i++){
         Result result;
         result.setPosX(getLongFromResponse(response));
@@ -304,7 +308,7 @@ long CameraModule::getLongFromResponse(vector<char> *response) {
   msb = response->at(1);
 
   // 2バイト分消去
-  response->erase(response->begin(), response->begin() + 1);
+  response->erase(response->begin(), response->begin() + 2);
 
   // 8ビットMSBをシフトさせて, long型にして返す
   return lsb | msb<<8;
