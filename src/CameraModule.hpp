@@ -49,6 +49,8 @@ public:
   void setResults(vector<Result> results);
   int getDevice();
   void setDevice(int device);
+  vector<char> getCommand();
+  void setCommand(vector<char> command);
   int getCommandBytes();
   void setCommandBytes(int commandBytes);
 
@@ -109,6 +111,13 @@ inline void CameraModule::setDevice(int device){
 // endregion
 
 // region command accessor
+inline vector<char> CameraModule::getCommand(){
+  return command_;
+}
+
+inline void CameraModule::setCommand(vector<char> command){
+  command_ = command;
+}
 
 // endregion
 

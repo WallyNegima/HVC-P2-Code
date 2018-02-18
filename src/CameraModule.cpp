@@ -62,6 +62,11 @@ vector<char> CameraModule::getDeviceInformation(int cmd) {
   setHeader(&command_);
   switch (cmd) {
     case (CameraModule::CMD_GET_VERSIONS) :
+      
+      command_.push_back(0x00);
+      command_.push_back(0x00);
+      command_.push_back(0x00);
+
       //コマンド送信
       sendCommand();
 
@@ -99,6 +104,9 @@ vector<char> CameraModule::detectObject(char option1, char option2, char imageOp
 
   // 顔を検出するコマンドをセット
   setHeader(&command_);
+  command_.push_back(0x04);
+  command_.push_back(0x03);
+  command_.push_back(0x00);
   command_.push_back(option1);
   command_.push_back(option2);
   command_.push_back(imageOption);
@@ -130,9 +138,6 @@ void CameraModule::setHeader(vector<char> *command) {
 
   command->clear();
   command->push_back(0xFE);
-  command->push_back(0x00);
-  command->push_back(0x00);
-  command->push_back(0x00);
 
 }
 
@@ -155,7 +160,7 @@ void CameraModule::sendCommand() {
   }
 
   //レスポンスまで少し時間がかかるため, まつ
-  delay(500);
+  delay(600);
 
 }
 
