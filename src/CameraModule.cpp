@@ -158,30 +158,30 @@ void CameraModule::responseAnalyze(int func, vector<char> *response) {
       // 検出した体情報をbodyResultsに格納
       for(int i=0; i<bodyNum; i++){
         Result result;
-        result.setPosX(getLongFromResponse(&response));
-        result.setPosY(getLongFromResponse(&response));
-        result.setSize(getLongFromResponse(&response));
-        result.setConfidence(getLongFromResponse(&response));
+        result.setPosX(getLongFromResponse(response));
+        result.setPosY(getLongFromResponse(response));
+        result.setSize(getLongFromResponse(response));
+        result.setConfidence(getLongFromResponse(response));
         bodyResults_.push_back(result);
       }
 
       // 検出した体情報をbodyResultsに格納
       for(int i=0; i<handNum; i++){
         Result result;
-        result.setPosX(getLongFromResponse(&response));
-        result.setPosY(getLongFromResponse(&response));
-        result.setSize(getLongFromResponse(&response));
-        result.setConfidence(getLongFromResponse(&response));
+        result.setPosX(getLongFromResponse(response));
+        result.setPosY(getLongFromResponse(response));
+        result.setSize(getLongFromResponse(response));
+        result.setConfidence(getLongFromResponse(response));
         handResults_.push_back(result);
       }
 
       // 検出した体情報をbodyResultsに格納
       for(int i=0; i<faceNum; i++){
         Result result;
-        result.setPosX(getLongFromResponse(&response));
-        result.setPosY(getLongFromResponse(&response));
-        result.setSize(getLongFromResponse(&response));
-        result.setConfidence(getLongFromResponse(&response));
+        result.setPosX(getLongFromResponse(response));
+        result.setPosY(getLongFromResponse(response));
+        result.setSize(getLongFromResponse(response));
+        result.setConfidence(getLongFromResponse(response));
         faceResults_.push_back(result);
       }
 
