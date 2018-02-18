@@ -60,8 +60,8 @@ public:
   void setBodyResults(vector<Result> results);
   vector<Result> getHandResults();
   void setHandResults(vector<Result> results);
-  vector<Result> getFaceResults();
-  void setFaceResults(vector<Result> results);
+  vector<FaceResult> getFaceResults();
+  void setFaceResults(vector<FaceResult> results);
   int getDevice();
   void setDevice(int device);
   vector<char> getCommand();
@@ -134,7 +134,7 @@ inline void CameraModule::setHandResults(vector<Result> results){
  *
  * @return results
  */
-inline vector<Result> CameraModule::getFaceResults(){
+inline vector<FaceResult> CameraModule::getFaceResults(){
   return faceResults_;
 }
 
@@ -145,7 +145,7 @@ inline vector<Result> CameraModule::getFaceResults(){
  *
  * @param results
  */
-inline void CameraModule::setFaceResults(vector<Result> results){
+inline void CameraModule::setFaceResults(vector<FaceResult> results){
   faceResults_ = results;
 }
 
