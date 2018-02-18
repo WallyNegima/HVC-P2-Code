@@ -156,6 +156,7 @@ void CameraModule::responseAnalyze(int func, vector<char> *response) {
       response->erase(response->begin() , response->begin() + 4);
 
       cerr << "detected results:"<< bodyNum << ", " << handNum << ", " << faceNum << "\n";
+      cerr << response->size() << "\n";
       // 検出した体情報をbodyResultsに格納
       for(int i=0; i<bodyNum; i++){
         Result result;
@@ -165,6 +166,7 @@ void CameraModule::responseAnalyze(int func, vector<char> *response) {
         result.setConfidence(getLongFromResponse(response));
         bodyResults_.push_back(result);
       }
+      cerr << response->size() << "\n";
 
       // 検出した体情報をhandResultsに格納
       for(int i=0; i<handNum; i++){
@@ -175,6 +177,7 @@ void CameraModule::responseAnalyze(int func, vector<char> *response) {
         result.setConfidence(getLongFromResponse(response));
         handResults_.push_back(result);
       }
+      cerr << response->size() << "\n";
 
       // 検出した体情報をfaceResultsに格納
       for(int i=0; i<faceNum; i++){
@@ -185,6 +188,7 @@ void CameraModule::responseAnalyze(int func, vector<char> *response) {
         result.setConfidence(getLongFromResponse(response));
         faceResults_.push_back(result);
       }
+      cerr << response->size() << "\n";
 
       break;
     }
