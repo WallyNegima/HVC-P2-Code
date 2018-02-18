@@ -1,3 +1,0 @@
-/Users/wally_nagama/myDir/hobby/HVC-P2-Code/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/wally_nagama/myDir/hobby/HVC-P2-Code/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/wally_nagama/myDir/hobby/HVC-P2-Code/cmake-build-debug/CMakeFiles/HVC_P2_Code.dir

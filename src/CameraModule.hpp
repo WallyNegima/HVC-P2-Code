@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "Result.hpp"
+#include "SerialUtil.hpp"
 
 using namespace std;
 
