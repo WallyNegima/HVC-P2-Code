@@ -20,9 +20,10 @@ int main(){
 
   // endregion
 
-  // region get settings
-  
-  response = cameraModule->getDeviceInformation(CameraModule::CMD_GET_VERSIONS);
+  // region get settings and コネクション確認
+  while( response.empty() ) {
+    response = cameraModule->getDeviceInformation(CameraModule::CMD_GET_VERSIONS);
+  }
   cout << "Camera version\n";
   for(auto itr = response.begin(); itr != response.end(); ++itr){
     printf("0x%02X", *itr);
@@ -31,13 +32,15 @@ int main(){
   // endregion
 
   // region loop ditect face
-  
-  response = cameraModule->detectObject(
-      CameraModule::DETECT_OPTION1_ALL,
-      CameraModule::DETECT_OPTION2_ALL,
-      CameraModule::IMAGE_OPTION_NON
-  );
 
+  response.clear();
+  while( response.empty() ) {
+    response = cameraModule->detectObject(
+        CameraModule::DETECT_OPTION1_ALL,
+        CameraModule::DETECT_OPTION2_ALL,
+        CameraModule::IMAGE_OPTION_NON
+    );
+  }
   cout << "\nDetect Results\n";
   for(auto itr = response.begin(); itr != response.end(); ++itr){
     printf("0x%02X", *itr);
