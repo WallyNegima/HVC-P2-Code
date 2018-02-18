@@ -1,4 +1,4 @@
-class FaceResult : Result{
+class FaceResult : public Result{
 
   // region private params
 

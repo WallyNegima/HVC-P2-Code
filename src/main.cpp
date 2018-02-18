@@ -39,7 +39,7 @@ int main(){
   }
   cameraModule->responseAnalyze(CameraModule::DETECT_RESPONSE, &response);
   cout << "Detect Results\n";
-  vector<Result> results = cameraModule->getFaceResults();
+  vector<FaceResult> results = cameraModule->getFaceResults();
   for(auto itr = results.begin(); itr != results.end(); ++itr){
     cout << "X          :" << itr->getPosX() << "\n";
     cout << "Y          :" << itr->getPosY() << "\n";

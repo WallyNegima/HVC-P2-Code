@@ -177,7 +177,7 @@ void CameraModule::responseAnalyze(int func, vector<char> *response) {
 
       // 検出した体情報をfaceResultsに格納
       for(int i=0; i<faceNum; i++){
-        Result result;
+        FaceResult result;
         result.setPosX(getLongFromResponse(response));
         result.setPosY(getLongFromResponse(response));
         result.setSize(getLongFromResponse(response));
