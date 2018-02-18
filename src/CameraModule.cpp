@@ -153,7 +153,7 @@ void CameraModule::responseAnalyze(int func, vector<char> *response) {
       int bodyNum = response->at(0);
       int handNum = response->at(1);
       int faceNum = response->at(2);
-      response->erase(response->begin() , response->begin() + 4);
+      response->erase(response->begin() , response->begin() + 3);
 
       cerr << "detected results:"<< bodyNum << ", " << handNum << ", " << faceNum << "\n";
       cerr << response->size() << "\n";
