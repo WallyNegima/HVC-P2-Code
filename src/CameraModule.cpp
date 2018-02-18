@@ -134,7 +134,10 @@ vector<char> CameraModule::detectObject(char option1, char option2, char imageOp
  *
  * @param func
  */
-void CameraModule::responseAnalyze(int func, vector<char> *response) {
+void CameraModule::responseAnalyze(int func,
+                                   char option1,
+                                   char option2,
+                                   vector<char> *response) {
 
   switch (func) {
 
@@ -182,6 +185,59 @@ void CameraModule::responseAnalyze(int func, vector<char> *response) {
         result.setPosY(getLongFromResponse(response));
         result.setSize(getLongFromResponse(response));
         result.setConfidence(getLongFromResponse(response));
+
+        // 顔向き推定
+        if(option1 & 0b00001000){
+          result.setHorizontalDirection(getLongFromResponse(response));
+          result.setVerticalDirection(getLongFromResponse(response));
+          result.setInclination(getLongFromResponse(response));
+          result.setDirectionConfidence(getLongFromResponse(response));
+        }
+
+        // 年齢推定
+        if(option1 & 0b00010000){
+          result.setAge((long)response->front());
+          response->erase(response->begin());
+          result.setAgeConfidence(getLongFromResponse(response));
+        }
+
+        // 性別推定
+        if(option1 & 0b00100000){
+          result.setSex((long)response->front());
+          response->erase(response->begin());
+          result.setSexConfidence(getLongFromResponse(response));
+        }
+
+        // 視線推定
+        if(option1 & 0b01000000){
+          result.setHorizontalSight((long)response->at(0));
+          result.setVerticalSight((long)response->at(1));
+          response->erase(response->begin(), response->begin() + 2);
+        }
+
+        // 目つむり推定
+        if(option1 & 0b10000000){
+          result.setEyeCloseLeft(getLongFromResponse(response));
+          result.setEyeCloseRight(getLongFromResponse(response));
+        }
+
+        // 表情
+        if(option2 & 0b00000001){
+          result.setNoneEx((long)response->at(0));
+          result.setJoyEx((long)response->at(1));
+          result.setSurpriseEx((long)response->at(2));
+          result.setAngryEx((long)response->at(3));
+          result.setSadEx((long)response->at(4));
+          result.setTotalEx((long)response->at(5));
+          response->erase(response->begin(), response->begin() + 6);
+        }
+
+        // 顔認証
+        if(option2 & 0b00000010){
+          result.setFaceId(getLongFromResponse(response));
+          result.setFaceScore(getLongFromResponse(response));
+        }
+
         faceResults_.push_back(result);
       }
 
