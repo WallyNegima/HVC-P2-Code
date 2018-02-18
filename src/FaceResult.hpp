@@ -116,6 +116,14 @@ inline void FaceResult::setAge(long age) {
   age_ = age;
 }
 
+inline long FaceResult::getAgeConfidence() {
+  return ageConfidence_;
+}
+
+inline void FaceResult::setAgeConfidence(long confidence) {
+  ageConfidence_ = confidence;
+}
+
 inline long FaceResult::getSex() {
   return sex_;
 }
