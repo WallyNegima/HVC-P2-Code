@@ -31,7 +31,7 @@ int main(){
 
   // endregion
 
-  // region loop ditect face
+  // region loop detect face
 
   response.clear();
   while( response.empty() ) {
@@ -41,7 +41,7 @@ int main(){
         CameraModule::IMAGE_OPTION_NON
     );
   }
-  cameraModule->responseAnalyze(CameraModule::DETECT_RESPONSE,response);
+  cameraModule->responseAnalyze(CameraModule::DETECT_RESPONSE,&response);
   cout << "\nDetect Results\n";
   vector<Result> results = cameraModule->getFaceResults();
   for(auto itr = results.begin(); itr != results.end(); ++itr){
