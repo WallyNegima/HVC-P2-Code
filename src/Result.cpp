@@ -2,3 +2,6 @@
 #include "Result.hpp"
 
 //methods
+
+Result::Result(){
+}

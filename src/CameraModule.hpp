@@ -16,13 +16,17 @@ class CameraModule{
   // region private params
 
 private:
-  vector<Result> results_;
+  vector<Result> faceResults_;
+  vector<Result> handResults_;
+  vector<Result> bodyResults_;
   int device_;
   vector<char> command_;
   int commandBytes_;
   void setHeader(vector<char> *command);
   void sendCommand();
   vector<char> getResponse();
+  bool hasHeaderErr(vector<char> *response);
+  long getLongFromResponse(vector<char> *response);
 
   // endregion
 
@@ -31,22 +35,31 @@ private:
 public:
   // region static number
 
+  // カメラ情報取得用定数
   static const int CMD_GET_VERSIONS = 0;
   static const int CMD_GET_CAMERA_DIRECTION = 1;
+  //物体検出オプション用定数
   static const char DETECT_OPTION1_ALL = 0b11111111;
   static const char DETECT_OPTION2_ALL = 0b00000011;
   static const char IMAGE_OPTION_NON = 0x00;
   static const char IMAGE_OPTION_QVGA = 0x01;
   static const char IMAGE_OPTION_VGA = 0x02;
+  //レスポンス解析用定数
+  static const int DETECT_RESPONSE = 0;
 
   // endregion
   CameraModule();
   int connect(string path, int baudrate);
   vector<char> getDeviceInformation(int cmd);
   vector<char> detectObject(char option1, char option2, char imageOption);
+  void responseAnalyze(int func, vector<char>);
   // accessor
-  vector<Result> getResults();
-  void setResults(vector<Result> results);
+  vector<Result> getBodyResults();
+  void setBodyResults(vector<Result> results);
+  vector<Result> getHandResults();
+  void setHandResults(vector<Result> results);
+  vector<Result> getFaceResults();
+  void setFaceResults(vector<Result> results);
   int getDevice();
   void setDevice(int device);
   vector<char> getCommand();
@@ -58,7 +71,7 @@ public:
 
 };
 
-// region Results accessor
+// region BodyResults accessor
 
 /**
  * getResults.
@@ -67,8 +80,8 @@ public:
  *
  * @return results
  */
-inline vector<Result> CameraModule::getResults(){
-  return results_;
+inline vector<Result> CameraModule::getBodyResults(){
+  return bodyResults_;
 }
 
 /**
@@ -78,8 +91,60 @@ inline vector<Result> CameraModule::getResults(){
  *
  * @param results
  */
-inline void CameraModule::setResults(vector<Result> results){
-  results_ = results;
+inline void CameraModule::setBodyResults(vector<Result> results){
+  bodyResults_ = results;
+}
+
+// endregion
+
+// region HandResults accessor
+
+/**
+ * getHandResults.
+ * <p>
+ * 検出結果を取得する
+ *
+ * @return HandResults
+ */
+inline vector<Result> CameraModule::getHandResults(){
+  return handResults_;
+}
+
+/**
+ * setResults.
+ * <p>
+ * 検出結果をオブジェクトに格納
+ *
+ * @param results
+ */
+inline void CameraModule::setHandResults(vector<Result> results){
+  handResults_ = results;
+}
+
+// endregion
+
+// region FaceResults accessor
+
+/**
+ * getResults.
+ * <p>
+ * 検出結果を取得する
+ *
+ * @return results
+ */
+inline vector<Result> CameraModule::getFaceResults(){
+  return faceResults_;
+}
+
+/**
+ * setResults.
+ * <p>
+ * 検出結果をオブジェクトに格納
+ *
+ * @param results
+ */
+inline void CameraModule::setFaceResults(vector<Result> results){
+  faceResults_ = results;
 }
 
 // endregion

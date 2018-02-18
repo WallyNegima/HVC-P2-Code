@@ -41,10 +41,16 @@ int main(){
         CameraModule::IMAGE_OPTION_NON
     );
   }
+  cameraModule->responseAnalyze(CameraModule::DETECT_RESPONSE,response);
   cout << "\nDetect Results\n";
-  for(auto itr = response.begin(); itr != response.end(); ++itr){
-    printf("0x%02X", *itr);
+  vector<Result> results = cameraModule->getFaceResults();
+  for(auto itr = results.begin(); itr != results.end(); ++itr){
+    cout << "X          :" << itr->getPosX() << "\n";
+    cout << "Y          :" << itr->getPosY() << "\n";
+    cout << "Size       :" << itr->getSize() << "\n";
+    cout << "Confidence :" << itr->getConfidence() << "\n";
   }
+
 
   // endregion
 
