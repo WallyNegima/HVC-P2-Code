@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "Result.hpp"
+#include "FaceResult.hpp"
 
 using namespace std;
 
@@ -16,7 +17,7 @@ class CameraModule{
   // region private params
 
 private:
-  vector<Result> faceResults_;
+  vector<FaceResult> faceResults_;
   vector<Result> handResults_;
   vector<Result> bodyResults_;
   int device_;
