@@ -76,155 +76,155 @@ public:
 
 // region all accessor
 
-long FaceResult::getHorizontalDirection() {
+inline long FaceResult::getHorizontalDirection() {
   return horizontalDirection_;
 }
 
-void FaceResult::setHorizontalDirection(long hd) {
+inline void FaceResult::setHorizontalDirection(long hd) {
   horizontalDirection_ = hd;
 }
 
-long FaceResult::getVerticalDirection() {
+inline long FaceResult::getVerticalDirection() {
   return verticalDirection_;
 }
 
-void FaceResult::setVerticalDirection(long vd) {
+inline void FaceResult::setVerticalDirection(long vd) {
   verticalDirection_ = vd;
 }
 
-long FaceResult::getInclination() {
+inline long FaceResult::getInclination() {
   return inclination_;
 }
 
-void FaceResult::setInclination(long inclination) {
+inline void FaceResult::setInclination(long inclination) {
   inclination_ = inclination;
 }
 
-long FaceResult::getDirectionConfidence() {
+inline long FaceResult::getDirectionConfidence() {
   return directionConfidence_;
 }
 
-void FaceResult::setDirectionConfidence(long confidence) {
+inline void FaceResult::setDirectionConfidence(long confidence) {
   directionConfidence_ = confidence;
 }
 
-long FaceResult::getAge() {
+inline long FaceResult::getAge() {
   return age_;
 }
 
-void FaceResult::setAge(long age) {
+inline void FaceResult::setAge(long age) {
   age_ = age;
 }
 
-long FaceResult::getSex() {
+inline long FaceResult::getSex() {
   return sex_;
 }
 
-void FaceResult::setSex(long sex) {
+inline void FaceResult::setSex(long sex) {
   sex_ = sex;
 }
 
-long FaceResult::getSexConfidence() {
+inline long FaceResult::getSexConfidence() {
   return sexConfidence_;
 }
 
-void FaceResult::setSexConfidence(long confidence) {
+inline void FaceResult::setSexConfidence(long confidence) {
   sexConfidence_ = confidence;
 }
 
-long FaceResult::getHorizontalSight() {
+inline long FaceResult::getHorizontalSight() {
   return horizontalSight_;
 }
 
-void FaceResult::setHorizontalSight(long horizontalSight) {
+inline void FaceResult::setHorizontalSight(long horizontalSight) {
   horizontalSight_= horizontalSight;
 }
 
-long FaceResult::getVerticalSight() {
+inline long FaceResult::getVerticalSight() {
   return verticalSight_;
 }
 
-void FaceResult::setVertcalSight(long verticalSight) {
+inline void FaceResult::setVertcalSight(long verticalSight) {
   verticalSight_ = verticalSight;
 }
 
-long FaceResult::getEyeCloseLeft() {
+inline long FaceResult::getEyeCloseLeft() {
   return eyeCloseLeft_;
 }
 
-void FaceResult::setEyeCloseLeft(long eyeClose) {
+inline void FaceResult::setEyeCloseLeft(long eyeClose) {
   eyeCloseLeft_ = eyeClose;
 }
 
-long FaceResult::getEyeCloseRight() {
+inline long FaceResult::getEyeCloseRight() {
   return eyeCloseRight_;
 }
 
-void FaceResult::setEyeCloseRight(long eyeClose) {
+inline void FaceResult::setEyeCloseRight(long eyeClose) {
   eyeCloseRight_ = eyeClose;
 }
 
-long FaceResult::getNoneEX() {
+inline long FaceResult::getNoneEX() {
   return noneEx;
 }
 
-void FaceResult::setNoneEx(long noneEx) {
+inline void FaceResult::setNoneEx(long noneEx) {
   noneEx_ = noneEx;
 }
 
-long FaceResult::getJoyEx() {
+inline long FaceResult::getJoyEx() {
   return joyEx_;
 }
 
-void FaceResult::setJoyEx(long joyEx) {
+inline void FaceResult::setJoyEx(long joyEx) {
   joyEx_ = joyEx;
 }
 
-long FaceResult::getSurpriseEx() {
+inline long FaceResult::getSurpriseEx() {
   return surpriseEx_;
 }
 
-void FaceResult::setSurpriseEx(long surpriseEx) {
+inline void FaceResult::setSurpriseEx(long surpriseEx) {
   surpriseEx_ = surpriseEx;
 }
 
-long FaceResult::getAngryEx() {
+inline long FaceResult::getAngryEx() {
   return angryEx_;
 }
 
-void FaceResult::setAngryEx(long angryEx) {
+inline void FaceResult::setAngryEx(long angryEx) {
   angryEx_ = angryEx;
 }
 
-long FaceResult::getSadEx() {
+inline long FaceResult::getSadEx() {
   return sadEx_;
 }
 
-void FaceResult::setSadEx(long sadEx) {
+inline void FaceResult::setSadEx(long sadEx) {
   sadEx_ = sadEx;
 }
 
-long FaceResult::getTotalEx() {
+inline long FaceResult::getTotalEx() {
   return totalEx_;
 }
 
-void FaceResult::setTotalEx(long totalEx) {
+inline void FaceResult::setTotalEx(long totalEx) {
   totalEx_ = totalEx;
 }
 
-long FaceResult::getFaceId() {
+inline long FaceResult::getFaceId() {
   return faceId_;
 }
 
-void FaceResult::setFaceId(long faceId) {
+inline void FaceResult::setFaceId(long faceId) {
   faceId_ = faceId;
 }
 
-long FaceResult::getFaceScore() {
+inline long FaceResult::getFaceScore() {
   return faceScore_;
 }
 
-void FaceResult::setFaceScore(long faceScore) {
+inline void FaceResult::setFaceScore(long faceScore) {
   faceScore_ = faceScore;
 }
 
