@@ -144,7 +144,7 @@ inline long FaceResult::getVerticalSight() {
   return verticalSight_;
 }
 
-inline void FaceResult::setVertcalSight(long verticalSight) {
+inline void FaceResult::setVerticalSight(long verticalSight) {
   verticalSight_ = verticalSight;
 }
 
@@ -165,7 +165,7 @@ inline void FaceResult::setEyeCloseRight(long eyeClose) {
 }
 
 inline long FaceResult::getNoneEX() {
-  return noneEx;
+  return noneEx_;
 }
 
 inline void FaceResult::setNoneEx(long noneEx) {
