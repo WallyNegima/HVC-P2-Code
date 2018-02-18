@@ -135,7 +135,7 @@ vector<char> CameraModule::detectObject(char option1, char option2, char imageOp
 void CameraModule::responseAnalyze(int func, vector<char> response) {
 
   switch (func) {
-    case (CameraModule::DETECT_RESPONSE) :
+    case (CameraModule::DETECT_RESPONSE) :{
       // 物体検出結果を分析
 
       // エラー検出
@@ -144,11 +144,11 @@ void CameraModule::responseAnalyze(int func, vector<char> response) {
       }
 
       // データ長さ取得
-      int bodyNum = response.front();
+      int bodyNum = (int)response.front();
       response.erase(response.begin());
-      int handNum = response.front();
+      int handNum = (int)response.front();
       response.erase(response.begin());
-      int faceNum = response.front();
+      int faceNum = (int)response.front();
       response.erase(response.begin());
 
       // 0で固定されている分を削除 カメラモジュールの仕様.
@@ -187,6 +187,7 @@ void CameraModule::responseAnalyze(int func, vector<char> response) {
 
       cerr << response.size();
       break;
+    }
     default :
       cerr;
   }
