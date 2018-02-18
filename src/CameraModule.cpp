@@ -332,7 +332,7 @@ long CameraModule::getLongFromResponse(vector<char> *response) {
   msb = response->at(1);
 
   // 2バイト分消去
-  response->erase(response->begin(), response->begin() + 2);
+  response->erase(response->begin(), response->begin() + 1);
 
   // 8ビットMSBをシフトさせて, long型にして返す
   return lsb | msb<<8;
