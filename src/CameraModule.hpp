@@ -30,11 +30,21 @@ private:
   // region public params
 
 public:
+  // region static number
+
   static const int CMD_GET_VERSIONS = 0;
   static const int CMD_GET_CAMERA_DIRECTION = 1;
+  static const char DETECT_OPTION1_ALL = 0b11111111;
+  static const char DETECT_OPTION2_ALL = 0b00000011;
+  static const char IMAGE_OPTION_NON = 0x00;
+  static const char IMAGE_OPTION_QVGA = 0x01;
+  static const char IMAGE_OPTION_VGA = 0x02;
+
+  // endregion
   CameraModule();
   int connect(string path, int baudrate);
   vector<char> getDeviceInformation(int cmd);
+  vector<char> detectObject(char option1, char option2, char imageOption);
   // accessor
   vector<Result> getResults();
   void setResults(vector<Result> results);

@@ -5,7 +5,7 @@
 
 using namespace std;
 
-//methods
+//public methods
 
 // region コンストラクタ
 
@@ -44,53 +44,15 @@ int CameraModule::connect(string path, int baudrate) {
 
 // endregion
 
-// region モジュールにコマンドを送る
-
-/**
- * sendCommand.
- * モジュールにコマンドを送る.
- */
-void CameraModule::sendCommand(){
-
-  // 送受信中の情報を全て消去
-  serialFlush(device_);
-
-  // command_ にある全てのコマンド情報を送信
-  for(auto itr = command_.begin(); itr != command_.end(); ++itr ){
-    serialPutchar(device_, *itr);
-  }
-
-  //レスポンスまで少し時間がかかるため, まつ
-  delay(500);
-
-}
-
-// endregion
-
-// region モジュールからのレスポンスを受け取る
-
-vector<char> CameraModule::getResponse(){
-  vector<char> responses;
-
-  while(serialDataAvail(device_)){
-    responses.push_back(serialGetchar(device_));
-  }
-
-  return responses;
-
-}
-
-
-// endregion
-
 // region デバイス情報を得る系のコマンド
 
 /**
  * getDeviceInformation.
+ * <p>
  * デバイス情報を得る.バージョン, 取付方向など.
  *
  * @param cmd
- * @return
+ * @return response
  */
 vector<char> CameraModule::getDeviceInformation(int cmd) {
 
@@ -98,7 +60,7 @@ vector<char> CameraModule::getDeviceInformation(int cmd) {
 
   // cmd によって送るコマンドをわける
   setHeader(&command_);
-  switch(cmd){
+  switch (cmd) {
     case (CameraModule::CMD_GET_VERSIONS) :
       //コマンド送信
       sendCommand();
@@ -119,7 +81,43 @@ vector<char> CameraModule::getDeviceInformation(int cmd) {
 
 // endregion
 
-// region
+// region detectObject 物体検出実行メソッド
+
+/**
+ * detectObject.
+ * <p>
+ * 物体検出を行うメソッド
+ *
+ * @param option1 目つむり,視線,性別,年齢,顔向き,顔検出,手検出,体検出
+ * @param option2 顔認証,表情
+ * @param imageOption なし,QVGA,VGA
+ * @return response
+ */
+vector<char> CameraModule::detectObject(char option1, char option2, char imageOption) {
+
+  vector<char> response;
+
+  // 顔を検出するコマンドをセット
+  setHeader(&command_);
+  command_.push_back(option1);
+  command_.push_back(option2);
+  command_.push_back(imageOption);
+
+  // モジュールにコマンド送信
+  sendCommand();
+
+  // レスポンスを受け取る
+  response = getResponse();
+
+  return response;
+
+}
+
+// endregion
+
+// private methods
+
+// region setHeader.
 
 /**
  * setHeader.
@@ -135,6 +133,44 @@ void CameraModule::setHeader(vector<char> *command) {
   command->push_back(0x00);
   command->push_back(0x00);
   command->push_back(0x00);
+
+}
+
+// endregion
+
+// region モジュールにコマンドを送る
+
+/**
+ * sendCommand.
+ * モジュールにコマンドを送る.
+ */
+void CameraModule::sendCommand() {
+
+  // 送受信中の情報を全て消去
+  serialFlush(device_);
+
+  // command_ にある全てのコマンド情報を送信
+  for (auto itr = command_.begin(); itr != command_.end(); ++itr) {
+    serialPutchar(device_, *itr);
+  }
+
+  //レスポンスまで少し時間がかかるため, まつ
+  delay(500);
+
+}
+
+// endregion
+
+// region モジュールからのレスポンスを受け取る
+
+vector<char> CameraModule::getResponse() {
+  vector<char> responses;
+
+  while (serialDataAvail(device_)) {
+    responses.push_back(serialGetchar(device_));
+  }
+
+  return responses;
 
 }
 
