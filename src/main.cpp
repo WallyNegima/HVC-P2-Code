@@ -24,7 +24,6 @@ int main(){
   while( response.empty() ) {
     response = cameraModule->getDeviceInformation(CameraModule::CMD_GET_VERSIONS);
   }
-  cout << "Camera version\n";
 
   // endregion
 
@@ -39,7 +38,7 @@ int main(){
     );
   }
   cameraModule->responseAnalyze(CameraModule::DETECT_RESPONSE, &response);
-  cout << "\nDetect Results\n";
+  cout << "Detect Results\n";
   vector<Result> results = cameraModule->getFaceResults();
   for(auto itr = results.begin(); itr != results.end(); ++itr){
     cout << "X          :" << itr->getPosX() << "\n";

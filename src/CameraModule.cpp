@@ -153,10 +153,8 @@ void CameraModule::responseAnalyze(int func, vector<char> *response) {
       int bodyNum = response->at(0);
       int handNum = response->at(1);
       int faceNum = response->at(2);
-      response->erase(response->begin() , response->begin() + 3);
+      response->erase(response->begin() , response->begin() + 4);
 
-      cerr << "detected results:"<< bodyNum << ", " << handNum << ", " << faceNum << "\n";
-      cerr << response->size() << "\n";
       // 検出した体情報をbodyResultsに格納
       for(int i=0; i<bodyNum; i++){
         Result result;
@@ -166,7 +164,6 @@ void CameraModule::responseAnalyze(int func, vector<char> *response) {
         result.setConfidence(getLongFromResponse(response));
         bodyResults_.push_back(result);
       }
-      cerr << response->size() << "\n";
 
       // 検出した体情報をhandResultsに格納
       for(int i=0; i<handNum; i++){
@@ -177,7 +174,6 @@ void CameraModule::responseAnalyze(int func, vector<char> *response) {
         result.setConfidence(getLongFromResponse(response));
         handResults_.push_back(result);
       }
-      cerr << response->size() << "\n";
 
       // 検出した体情報をfaceResultsに格納
       for(int i=0; i<faceNum; i++){
@@ -188,7 +184,6 @@ void CameraModule::responseAnalyze(int func, vector<char> *response) {
         result.setConfidence(getLongFromResponse(response));
         faceResults_.push_back(result);
       }
-      cerr << response->size() << "\n";
 
       break;
     }
@@ -279,14 +274,14 @@ bool CameraModule::hasHeaderErr(vector<char> *response) {
   if (response->front() != 0xFE) {
     return true;
   }
-  response->erase(response->begin() + 0);
+  response->erase(response->begin());
 
   // 2バイト目
   if (response->front() != 0x00) {
     cerr << "err code is" << response->front() << "\n";
     return true;
   }
-  response->erase(response->begin() + 0);
+  response->erase(response->begin());
 
   return false;
 
@@ -311,7 +306,7 @@ long CameraModule::getResponseBytes(vector<char> *response) {
   }
 
   long dataSize = response->at(0) | response->at(1)<<8 |response->at(2)<<16 | response->at(3)<<24;
-  response->erase(response->begin(), response->begin() + 3);
+  response->erase(response->begin(), response->begin() + 4);
 
   return dataSize;
 }
@@ -339,7 +334,7 @@ long CameraModule::getLongFromResponse(vector<char> *response) {
   msb = response->at(1);
 
   // 2バイト分消去
-  response->erase(response->begin(), response->begin() + 1);
+  response->erase(response->begin(), response->begin() + 2);
 
   // 8ビットMSBをシフトさせて, long型にして返す
   return lsb | msb<<8;
