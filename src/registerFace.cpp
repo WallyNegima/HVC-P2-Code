@@ -51,10 +51,20 @@ int main(int argc, char* argv[]){
   cout << "imageWidth :" << result.getImageWidth() << "\n";
   cout << "imageHeight:" << result.getImageHeight() << "\n";
 
+  // アルバム情報をホストへ吐き出す
+  response.clear();
+  response = cameraModule->getModuleAlbum();
+
+  for(auto itr = response.begin(); itr != response.end(); ++itr){
+    printf("%x", *itr);
+  }
+
+  // モジュールのアルバム情報をROMに保存
   response.clear();
   response = cameraModule->registerToModuleRom();
 
+  //解析してエラーが無ければ情報をプリント
   cameraModule->responseAnalyze(CameraModule::REGISTER_TO_ROM,
                                 -1, -1, &response);
- cout << "saved to Module ROM!\n"; 
+  cout << "saved to Module ROM!\n";
 }

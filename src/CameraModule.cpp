@@ -188,6 +188,30 @@ vector<char> CameraModule::registerToModuleRom() {
 
 // endregion
 
+// region getModuleAlbum アルバム情報をホストに吐き出す
+
+vector<char> CameraModule::getModuleAlbum() {
+
+  vector<char> response;
+
+  // アルバム情報をホストに吐き出すコマンドをセット
+  setHeader(&command_);
+  command_.push_back(0x20);
+  command_.push_back(0x00);
+  command_.push_back(0x00);
+
+  // モジュールにコマンド送信
+  sendCommand();
+
+  // レスポンスを受け取る
+  response = getResponse();
+
+  return response;
+
+}
+
+// endregion
+
 // region responseAnalyze レスポンスを分析する
 
 /**
