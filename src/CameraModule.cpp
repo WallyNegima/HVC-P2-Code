@@ -453,9 +453,14 @@ void CameraModule::responseAnalyze(int func,
       cerr << responseDataSize << "," << albumSize << "," << CRC << "\n";
       //album.txtに全データ数, アルバムサイズ, CRCの情報を書き込む
       // ファイル出力ストリーム
-      string fileName = "./album.txt";
+      string fileName = "album.txt";
       ofstream ofs(fileName, ios::out);
-      ofs << responseDataSize << "," << albumSize << "," << CRC << "\n";
+      ofs << responseDataSize << endl;
+      cerr << ofs.tellp() << "\n";
+      ofs << albumSize << endl;
+      cerr << ofs.tellp() << "\n";
+      ofs << CRC << endl;
+      ofs.close();
 
       break;
 

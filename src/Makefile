@@ -11,3 +11,5 @@ register.out: registerFace.cpp module.o result.o
 	g++ -I/usr/local/include -L/usr/local/lib -lwiringPi -std=gnu++0x -o register.out registerFace.cpp result.o module.o
 clean:
 	$(RM) *.out *.o
+load.out: loadAlbum.cpp module.o result.o
+	g++ -I/usr/local/include -L/usr/local/lib -lwiringPi -std=gnu++0x -o loadAlbum.out loadAlbum.cpp result.o module.o
