@@ -14,7 +14,7 @@ const int baudrate = 9600;
 
 // endregion
 
-int main(int argc, char* argv){
+int main(int argc, char* argv[]){
 
   CameraModule* cameraModule = new CameraModule();
   vector<char> response;
@@ -25,15 +25,16 @@ int main(int argc, char* argv){
 
   // endregion
 
-  if(argc != 3){
+  if(argc != 4){
+    cerr << argc << "\n";
     cerr << "FaceID, DataID, 名前をコマンドライン引数として入力してください\n";
     return -1;
   }
 
   while( response.empty() ){
     response = cameraModule->registerFace(
-        argv[1],
-        argv[2]
+        atoi(argv[1]),
+        atoi(argv[2])
     );
   }
 
