@@ -4,6 +4,8 @@
 #include "CameraModule.hpp"
 #include <iostream>
 #include <stdio.h>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -54,22 +56,21 @@ int main(int argc, char* argv[]){
   // アルバム情報をホストへ吐き出す
   response.clear();
   response = cameraModule->getModuleAlbum();
-
+  cameraModule->responseAnalyze(CameraModule::SAVE_ALBUM,
+                                -1, -1, &response);
+  cout << response.size() << "\n";
+  //album.txtに全データ数, アルバムサイズ, CRCの情報を書き込む
+  // ファイル出力ストリーム
+  string fileName = "./album.txt";
+  ofstream ofs(fileName, ios::out);
   for(auto itr = response.begin(); itr != response.end(); ++itr){
-    printf("%x", *itr);
+    ofs << *itr << "\n";
   }
 
   // モジュールのアルバム情報をROMに保存
   response.clear();
   response = cameraModule->registerToModuleRom();
-  cameraModule->responseAnalyze(CameraModule::SAVE_ALBUM,
-                                -1, -1, &response);
-  for(auto itr = response.begin(); itr != response.end(); ++itr){
-    char text[128] = {'\0'};
-    snprintf(text, 128, "echo %d >> album.txt", *itr);
-    system(text);
-  }
-
+  
   //解析してエラーが無ければ情報をプリント
   cameraModule->responseAnalyze(CameraModule::REGISTER_TO_ROM,
                                 -1, -1, &response);

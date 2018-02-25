@@ -2,6 +2,8 @@
 #include "CameraModule.hpp"
 #include <wiringPi.h>
 #include <wiringSerial.h>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -405,14 +407,16 @@ void CameraModule::responseAnalyze(int func,
       // データ長さ取得
       // 4バイト分
       long responseDataSize = getResponseBytes(response);
-
       long albumSize = getResponseBytes(response);
       long CRC = getResponseBytes(response);
-
+      cerr << responseDataSize << "," << albumSize << "," << CRC << "\n";
       //album.txtに全データ数, アルバムサイズ, CRCの情報を書き込む
-      char text[128] = {'\0'} ;
-      snprintf(text, 128, "echo %d,%d,%d > album.txt", responseDataSize,albumSize,CRC);
-      system(text);
+      // ファイル出力ストリーム
+      string fileName = "./album.txt";
+      ofstream ofs(fileName, ios::out);
+      ofs << responseDataSize << "," << albumSize << "," << CRC << "\n";
+
+      break;
 
       // endregion
 
