@@ -391,6 +391,32 @@ void CameraModule::responseAnalyze(int func,
       // endregion
 
     }
+    // カメラのアルバム情報をホストに保存
+    case (CameraModule::SAVE_ALBUM) : {
+
+      // region アルバム情報をホストに保存する時の解析
+
+      // エラー検出
+      // 2バイト分
+      if (hasHeaderErr(response)) {
+        break;
+      }
+
+      // データ長さ取得
+      // 4バイト分
+      long responseDataSize = getResponseBytes(response);
+
+      long albumSize = getResponseBytes(response);
+      long CRC = getResponseBytes(response);
+
+      //album.txtに全データ数, アルバムサイズ, CRCの情報を書き込む
+      char text[128] = {'\0'} ;
+      snprintf(text, 128, "echo %d,%d,%d > album.txt", responseDataSize,albumSize,CRC);
+      system(text);
+
+      // endregion
+
+    }
     default :
       cerr;
   }

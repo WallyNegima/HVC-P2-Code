@@ -50,6 +50,7 @@ public:
   static const int DETECT_RESPONSE = 0;
   static const int REGISTER_FACE = 1;
   static const int REGISTER_TO_ROM = 2;
+  static const int SAVE_ALBUM = 3;
 
   // endregion
 

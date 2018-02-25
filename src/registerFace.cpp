@@ -62,6 +62,13 @@ int main(int argc, char* argv[]){
   // モジュールのアルバム情報をROMに保存
   response.clear();
   response = cameraModule->registerToModuleRom();
+  cameraModule->responseAnalyze(CameraModule::SAVE_ALBUM,
+                                -1, -1, &response);
+  for(auto itr = response.begin(); itr != response.end(); ++itr){
+    char text[128] = {'\0'};
+    snprintf(text, 128, "echo %d >> album.txt", *itr);
+    system(text);
+  }
 
   //解析してエラーが無ければ情報をプリント
   cameraModule->responseAnalyze(CameraModule::REGISTER_TO_ROM,
