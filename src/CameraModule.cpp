@@ -306,7 +306,6 @@ void CameraModule::responseAnalyze(int func,
       result.setImageWidth(imageWidth);
       result.setImageHeight(imageHeight);
       faceResults_.push_back(result);
-      cerr << response->size();
     }
     default :
       cerr;

@@ -45,10 +45,10 @@ int main(int argc, char* argv[]){
                                 -1,-1, &response);
 
   FaceResult result = cameraModule->getFaceResults().front();
-  cout << "userID     :" << argv[1];
-  cout << "dataID     :" << argv[2];
-  cout << "userName   :" << argv[3];
-  cout << "imageWidth :" << result.getImageWidth();
-  cout << "imageHeight:" << result.getImageHeight();
+  cout << "userID     :" << argv[1] << "\n";
+  cout << "dataID     :" << argv[2] << "\n";
+  cout << "userName   :" << argv[3] << "\n";
+  cout << "imageWidth :" << result.getImageWidth() << "\n";
+  cout << "imageHeight:" << result.getImageHeight() << "\n";
 
 }
