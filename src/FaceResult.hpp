@@ -24,6 +24,10 @@ private:
   long totalEx_;
   long faceId_;
   long faceScore_;
+  // 画像データ
+  long imageWidth_;
+  long imageHeight_;
+  vector<char> grayScale_;
 
   // endregion
 
@@ -70,6 +74,12 @@ public:
   void setFaceId(long faceId);
   long getFaceScore();
   void setFaceScore(long faceScore);
+  long getImageWidth();
+  void setImageWidth(long imageWidth);
+  long getImageHeight();
+  void setImageHeight(long imageHeight);
+  vector<char> getGrayScale();
+  void setGrayScale(vector<char> grayScale);
 
   // endregion
 };
@@ -234,6 +244,30 @@ inline long FaceResult::getFaceScore() {
 
 inline void FaceResult::setFaceScore(long faceScore) {
   faceScore_ = faceScore;
+}
+
+inline long FaceResult::getImageWidth(){
+  return imageWidth_;
+}
+
+inline void FaceResult::setImageWidth(long imageWidth){
+  imageWidth_ = imageWidth;
+}
+
+inline long FaceResult::getImageHeight(){
+  return imageHeight_;
+}
+
+inline void FaceResult::setImageWidth(long imageHeight){
+  imageHeight_ = imageHeight;
+}
+
+inline vector<cahr> FcaeResult::getGrayScale(){
+  return grayScale_;
+}
+
+inline void FaceResult::setGrayScale(vector<char> grayScale) {
+ grayScale_ = grayScale;
 }
 
 // end region

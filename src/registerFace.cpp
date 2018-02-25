@@ -25,12 +25,14 @@ int main(int argc, char* argv[]){
 
   // endregion
 
+  // faceID, DataID, 名前を入力していなかったら終了
   if(argc != 4){
     cerr << argc << "\n";
     cerr << "FaceID, DataID, 名前をコマンドライン引数として入力してください\n";
     return -1;
   }
 
+  // 顔を検出して認証するまでコマンドを送信
   while( response.empty() ){
     response = cameraModule->registerFace(
         atoi(argv[1]),
@@ -38,8 +40,15 @@ int main(int argc, char* argv[]){
     );
   }
 
-  for(auto itr = response.begin(); itr != response.end(); ++itr){
-    cout << *itr;
-  }
+  // モジュールからのレスポンスを解析して, 検出結果を得る
+  cameraModule->responseAnalyze(CameraModule::REGISTER_FACE,
+                                null, null, &response);
+
+  FaceResult result = cameraModule->getFaceResults().front();
+  cout << "userID     :" << argv[1];
+  cout << "dataID     :" << argv[2];
+  cout << "userName   :" << argv[3];
+  cout << "imageWidth :" << result.getImageWidth();
+  cout << "imageHeight:" << result.getImageHeight();
 
 }

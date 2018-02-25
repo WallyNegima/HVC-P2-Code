@@ -163,7 +163,11 @@ vector<char> CameraModule::registerFace(int faceId, int dataId) {
  * <p>
  * 返ってきたレスポンスを分析するメソッド
  *
+ *
  * @param func
+ * @param option1 nullもありえる
+ * @param option2 nullもありえる
+ * @param response
  */
 void CameraModule::responseAnalyze(int func,
                                    char option1,
@@ -171,7 +175,6 @@ void CameraModule::responseAnalyze(int func,
                                    vector<char> *response) {
 
   switch (func) {
-
     // 物体検出結果を分析
     case (CameraModule::DETECT_RESPONSE) :{
 
@@ -274,6 +277,35 @@ void CameraModule::responseAnalyze(int func,
 
       break;
     }
+    // 顔を認証時のレスポンスを解析
+    case (CameraModule::REGISTER_FACE):{
+
+      // エラー検出
+      // 2バイト分
+      if (hasHeaderErr(response)) {
+        break;
+      }
+
+      // データ長さ取得
+      // 4バイト分
+      long responseDataSize = getResponseBytes(response);
+
+      // 顔画像データを取得
+      vector<char> image;
+      long imageWidth = getLongFromResponse(response);
+      long imageHeight = getLongFromResponse(response);
+
+      for(long height=0; height<imageHeight; ++height){
+        for(long width=0; width<imageWidth; ++width){
+          image.push_back(response->front());
+          response->erase(response->begin());
+        }
+      }
+      FaceResult result;
+      result.setGrayScale(image);
+      faceResults_.push_back(result);
+      cerr << response->size();
+    }
     default :
       cerr;
   }
@@ -340,7 +372,7 @@ vector<char> CameraModule::getResponse() {
 
 // endregion
 
-// region hasHeaderErr レスポンスのエラーチェック
+// region hasHeaderErr レスポンスのエラーチェック 2バイト分
 
 /**
  * hasHeaderErr.
