@@ -214,6 +214,47 @@ vector<char> CameraModule::getModuleAlbum() {
 
 // endregion
 
+// region loadAlbum アルバム情報をカメラに読み込む
+
+vector<char> CameraModule::loadAlbum(){
+
+  vector<char> response;
+
+  // アルバム情報をカメラにロードするコマンドをセット
+  setHeader(&command_);
+  command_.push_back(0x21);
+  command_.push_back(0x04);
+  command_.push_back(0x00);
+
+  // ファイルから読み取っていく
+  string fileName = "album.txt";
+  ifstream ifs(fileName, ios::in);
+  string line;
+
+  // 1行目からデータ数などを読み取る
+  istringstream iss(line);
+  string fn;
+
+  getline(iss, fn, ',');
+  long dataSize, albumSize, CRC;
+  char buf; // , を読み込ませるためのやつ
+  iss >> dataSize >> buf >> albumSize >> buf >> CRC;
+  cerr << dataSize << "," << albumSize << "," << CRC << "\n";
+
+  // アルバムデータを1行ずつ読み込む
+  vector<unsigned char> albumData;
+  while(getline(ifs, line)){
+
+    getline(iss, fn, ',');
+    unsigned char datum;
+    iss >> datum;
+
+    albumData.push_back(datum);
+    cerr << datum;
+  }
+
+}
+
 // region responseAnalyze レスポンスを分析する
 
 /**

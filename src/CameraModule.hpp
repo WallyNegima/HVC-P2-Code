@@ -63,7 +63,7 @@ public:
   vector<char> registerFace(int faceId, int dataid);
   vector<char> registerToModuleRom();
   vector<char> getModuleAlbum();
-
+  vector<char> loadAlbum();
 
   void responseAnalyze(int func, char option1, char option2, vector<char> *response);
 
