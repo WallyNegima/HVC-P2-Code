@@ -51,4 +51,10 @@ int main(int argc, char* argv[]){
   cout << "imageWidth :" << result.getImageWidth() << "\n";
   cout << "imageHeight:" << result.getImageHeight() << "\n";
 
+  response.clear();
+  response = cameraModule->registerToModuleRom();
+
+  cameraModule->responseAnalyze(CameraModule::REGISTER_TO_ROM,
+                                -1, -1, &response);
+  
 }

@@ -156,6 +156,38 @@ vector<char> CameraModule::registerFace(int faceId, int dataId) {
 
 // endregion
 
+// region registerToModuleRom カメラのROMにアルバムを保存
+
+/**
+ * registerToModuleRom.
+ * <p>
+ * アルバム情報をカメラモジュールのROMに保存
+ *
+ * @return response
+ */
+vector<char> CameraModule::registerToModuleRom() {
+
+  vector<char> response;
+
+  // アルバム情報をROMに保存するコマンドをセット
+  setHeader(&command_);
+  command_.push_back(0x22);
+  command_.push_back(0x00);
+  command_.push_back(0x00);
+
+  // モジュールにコマンド送信
+  sendCommand();
+
+  // レスポンスを受け取る
+  response = getResponse();
+
+  return response;
+
+}
+
+
+// endregion
+
 // region responseAnalyze レスポンスを分析する
 
 /**
@@ -176,7 +208,8 @@ void CameraModule::responseAnalyze(int func,
 
   switch (func) {
     // 物体検出結果を分析
-    case (CameraModule::DETECT_RESPONSE) :{
+    case (CameraModule::DETECT_RESPONSE) : {
+      // region 物体検出結果分析部分
 
       // エラー検出
       if (hasHeaderErr(response)) {
@@ -190,10 +223,10 @@ void CameraModule::responseAnalyze(int func,
       int bodyNum = response->at(0);
       int handNum = response->at(1);
       int faceNum = response->at(2);
-      response->erase(response->begin() , response->begin() + 4);
+      response->erase(response->begin(), response->begin() + 4);
 
       // 検出した体情報をbodyResultsに格納
-      for(int i=0; i<bodyNum; i++){
+      for (int i = 0; i < bodyNum; i++) {
         Result result;
         result.setPosX(getLongFromResponse(response));
         result.setPosY(getLongFromResponse(response));
@@ -203,7 +236,7 @@ void CameraModule::responseAnalyze(int func,
       }
 
       // 検出した体情報をhandResultsに格納
-      for(int i=0; i<handNum; i++){
+      for (int i = 0; i < handNum; i++) {
         Result result;
         result.setPosX(getLongFromResponse(response));
         result.setPosY(getLongFromResponse(response));
@@ -213,7 +246,7 @@ void CameraModule::responseAnalyze(int func,
       }
 
       // 検出した体情報をfaceResultsに格納
-      for(int i=0; i<faceNum; i++){
+      for (int i = 0; i < faceNum; i++) {
         FaceResult result;
         result.setPosX(getLongFromResponse(response));
         result.setPosY(getLongFromResponse(response));
@@ -221,7 +254,7 @@ void CameraModule::responseAnalyze(int func,
         result.setConfidence(getLongFromResponse(response));
 
         // 顔向き推定
-        if(option1 & 0b00001000){
+        if (option1 & 0b00001000) {
           result.setHorizontalDirection(getLongFromResponse(response));
           result.setVerticalDirection(getLongFromResponse(response));
           result.setInclination(getLongFromResponse(response));
@@ -229,45 +262,45 @@ void CameraModule::responseAnalyze(int func,
         }
 
         // 年齢推定
-        if(option1 & 0b00010000){
-          result.setAge((long)response->front());
+        if (option1 & 0b00010000) {
+          result.setAge((long) response->front());
           response->erase(response->begin());
           result.setAgeConfidence(getLongFromResponse(response));
         }
 
         // 性別推定
-        if(option1 & 0b00100000){
-          result.setSex((long)response->front());
+        if (option1 & 0b00100000) {
+          result.setSex((long) response->front());
           response->erase(response->begin());
           result.setSexConfidence(getLongFromResponse(response));
         }
 
         // 視線推定
-        if(option1 & 0b01000000){
-          result.setHorizontalSight((long)response->at(0));
-          result.setVerticalSight((long)response->at(1));
+        if (option1 & 0b01000000) {
+          result.setHorizontalSight((long) response->at(0));
+          result.setVerticalSight((long) response->at(1));
           response->erase(response->begin(), response->begin() + 2);
         }
 
         // 目つむり推定
-        if(option1 & 0b10000000){
+        if (option1 & 0b10000000) {
           result.setEyeCloseLeft(getLongFromResponse(response));
           result.setEyeCloseRight(getLongFromResponse(response));
         }
 
         // 表情
-        if(option2 & 0b00000001){
-          result.setNoneEx((long)response->at(0));
-          result.setJoyEx((long)response->at(1));
-          result.setSurpriseEx((long)response->at(2));
-          result.setAngryEx((long)response->at(3));
-          result.setSadEx((long)response->at(4));
-          result.setTotalEx((long)response->at(5));
+        if (option2 & 0b00000001) {
+          result.setNoneEx((long) response->at(0));
+          result.setJoyEx((long) response->at(1));
+          result.setSurpriseEx((long) response->at(2));
+          result.setAngryEx((long) response->at(3));
+          result.setSadEx((long) response->at(4));
+          result.setTotalEx((long) response->at(5));
           response->erase(response->begin(), response->begin() + 6);
         }
 
         // 顔認証
-        if(option2 & 0b00000010){
+        if (option2 & 0b00000010) {
           result.setFaceId(getLongFromResponse(response));
           result.setFaceScore(getLongFromResponse(response));
         }
@@ -276,9 +309,13 @@ void CameraModule::responseAnalyze(int func,
       }
 
       break;
+
+      // endregion
     }
     // 顔を認証時のレスポンスを解析
-    case (CameraModule::REGISTER_FACE):{
+    case (CameraModule::REGISTER_FACE) : {
+
+      // region 顔認証後のレスポンス解析部分
 
       // エラー検出
       // 2バイト分
@@ -295,8 +332,8 @@ void CameraModule::responseAnalyze(int func,
       long imageWidth = getLongFromResponse(response);
       long imageHeight = getLongFromResponse(response);
 
-      for(long height=0; height<imageHeight; ++height){
-        for(long width=0; width<imageWidth; ++width){
+      for (long height = 0; height < imageHeight; ++height) {
+        for (long width = 0; width < imageWidth; ++width) {
           image.push_back(response->front());
           response->erase(response->begin());
         }
@@ -306,6 +343,29 @@ void CameraModule::responseAnalyze(int func,
       result.setImageWidth(imageWidth);
       result.setImageHeight(imageHeight);
       faceResults_.push_back(result);
+
+      break;
+
+      // endregion
+
+    }
+    // カメラのアルバム情報をROMに保存
+    case (CameraModule::REGISTER_TO_ROM) : {
+
+      // region カメラのアルバム情報をROMに保存時の解析
+
+      // エラー検出
+      // 2バイト分
+      if (hasHeaderErr(response)) {
+        break;
+      }
+
+      // データ長さ取得
+      // 4バイト分
+      long responseDataSize = getResponseBytes(response);
+
+      // endregion
+
     }
     default :
       cerr;
@@ -421,11 +481,11 @@ bool CameraModule::hasHeaderErr(vector<char> *response) {
  */
 long CameraModule::getResponseBytes(vector<char> *response) {
 
-  if(response->empty()){
+  if (response->empty()) {
     return -1;
   }
 
-  long dataSize = response->at(0) | response->at(1)<<8 |response->at(2)<<16 | response->at(3)<<24;
+  long dataSize = response->at(0) | response->at(1) << 8 | response->at(2) << 16 | response->at(3) << 24;
   response->erase(response->begin(), response->begin() + 4);
 
   return dataSize;
@@ -445,7 +505,7 @@ long CameraModule::getResponseBytes(vector<char> *response) {
 long CameraModule::getLongFromResponse(vector<char> *response) {
 
   // 空っぽならエラーで, -1を返す
-  if(response->empty()){
+  if (response->empty()) {
     return -1;
   }
 
@@ -457,7 +517,7 @@ long CameraModule::getLongFromResponse(vector<char> *response) {
   response->erase(response->begin(), response->begin() + 2);
 
   // 8ビットMSBをシフトさせて, long型にして返す
-  return lsb | msb<<8;
+  return lsb | msb << 8;
 
 }
 
