@@ -4,6 +4,7 @@
 #include <wiringSerial.h>
 #include <fstream>
 #include <sstream>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -231,27 +232,34 @@ vector<char> CameraModule::loadAlbum(){
   ifstream ifs(fileName, ios::in);
   string line;
 
-  // 1行目からデータ数などを読み取る
-  istringstream iss(line);
-  string fn;
-
-  getline(iss, fn, ',');
   long dataSize, albumSize, CRC;
-  char buf; // , を読み込ませるためのやつ
-  iss >> dataSize >> buf >> albumSize >> buf >> CRC;
+  getline(ifs, line);
+  dataSize = atoi(line.c_str());
+  getline(ifs, line);
+  albumSize = atoi(line.c_str());
+  getline(ifs, line);
+  CRC = atoi(line.c_str());
+
   cerr << dataSize << "," << albumSize << "," << CRC << "\n";
+  ifs.close();
 
-  // アルバムデータを1行ずつ読み込む
-  vector<unsigned char> albumData;
-  while(getline(ifs, line)){
-
-    getline(iss, fn, ',');
+  FILE* fp = fopen(fileName.c_str(), "rb");
+  if(fp == NULL){
+    printf("err file open\n");
+    return response;
+  }
+  int albumData;
+  fscanf(fp, "%d", &albumData);
+  fscanf(fp, "%d", &albumData);
+  fscanf(fp, "%d", &albumData);
+  //アルバムデータを1行ずつ取り出して格納
+  for(int i=0; i<albumSize; i++){
     unsigned char datum;
-    iss >> datum;
-
-    albumData.push_back(datum);
+    fscanf(fp, "%d", &albumData);
+    datum = albumData & 0xFF;
     cerr << datum;
   }
+  fclose(fp);
 
 }
 
