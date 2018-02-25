@@ -303,6 +303,8 @@ void CameraModule::responseAnalyze(int func,
       }
       FaceResult result;
       result.setGrayScale(image);
+      result.setImageWidth(imageWidth);
+      result.setImageHeight(imageHeight);
       faceResults_.push_back(result);
       cerr << response->size();
     }

@@ -1,3 +1,5 @@
+using namespace std;
+
 class FaceResult : public Result{
 
   // region private params
@@ -258,16 +260,14 @@ inline long FaceResult::getImageHeight(){
   return imageHeight_;
 }
 
-inline void FaceResult::setImageWidth(long imageHeight){
+inline void FaceResult::setImageHeight(long imageHeight){
   imageHeight_ = imageHeight;
 }
 
-inline vector<cahr> FcaeResult::getGrayScale(){
+inline vector<char> FaceResult::getGrayScale(){
   return grayScale_;
 }
 
 inline void FaceResult::setGrayScale(vector<char> grayScale) {
- grayScale_ = grayScale;
+  grayScale_ = grayScale;
 }
-
-// end region

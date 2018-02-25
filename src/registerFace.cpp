@@ -42,7 +42,7 @@ int main(int argc, char* argv[]){
 
   // モジュールからのレスポンスを解析して, 検出結果を得る
   cameraModule->responseAnalyze(CameraModule::REGISTER_FACE,
-                                null, null, &response);
+                                -1,-1, &response);
 
   FaceResult result = cameraModule->getFaceResults().front();
   cout << "userID     :" << argv[1];
