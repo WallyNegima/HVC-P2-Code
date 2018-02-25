@@ -56,5 +56,5 @@ int main(int argc, char* argv[]){
 
   cameraModule->responseAnalyze(CameraModule::REGISTER_TO_ROM,
                                 -1, -1, &response);
-  
+ cout << "saved to Module ROM!\n"; 
 }
