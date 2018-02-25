@@ -48,13 +48,21 @@ public:
   static const char IMAGE_OPTION_VGA = 0x02;
   //レスポンス解析用定数
   static const int DETECT_RESPONSE = 0;
+  static const int REGISTER_FACE = 1;
 
   // endregion
+
   CameraModule();
   int connect(string path, int baudrate);
+
+  // command
   vector<char> getDeviceInformation(int cmd);
   vector<char> detectObject(char option1, char option2, char imageOption);
+  vector<char> registerFace(int faceId, int dataid);
+
+
   void responseAnalyze(int func, char option1, char option2, vector<char> *response);
+
   // accessor
   vector<Result> getBodyResults();
   void setBodyResults(vector<Result> results);
@@ -178,6 +186,7 @@ inline void CameraModule::setDevice(int device){
 // endregion
 
 // region command accessor
+
 inline vector<char> CameraModule::getCommand(){
   return command_;
 }

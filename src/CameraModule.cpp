@@ -125,6 +125,37 @@ vector<char> CameraModule::detectObject(char option1, char option2, char imageOp
 
 // endregion
 
+// region registerFace 顔を登録するメソッド
+
+vector<char> CameraModule::registerFace(int faceId, int dataId) {
+
+  vector<char> response;
+
+  // 顔を登録するコマンドをセット
+  setHeader(&command_);
+  command_.push_back(0x10);
+  command_.push_back(0x03);
+  command_.push_back(0x00);
+  // 4バイト中, 下16ビットを使用する.
+  // 0xFF(256) という数字がchar型では格納できないため, unsigned charでキャスト.
+  unsigned char lsb = faceId & 0xFF;
+  unsigned char msb = (faceId >> 8) & 0xFF;
+  command_.push_back(lsb);
+  command_.push_back(msb);
+  command_.push_back(dataId);
+
+  // モジュールにコマンドを送信
+  sendCommand();
+
+  // レスポンスを受け取る
+  response = getResponse();
+
+  return response;
+
+}
+
+// endregion
+
 // region responseAnalyze レスポンスを分析する
 
 /**
