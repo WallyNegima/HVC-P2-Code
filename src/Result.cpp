@@ -4,4 +4,5 @@
 //methods
 
 Result::Result(){
+  error_ = false;
 }

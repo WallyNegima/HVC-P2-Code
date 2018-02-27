@@ -11,6 +11,7 @@ const int baudrate = 9600;
 // endregion
 
 int main(){
+
   CameraModule* cameraModule = new CameraModule();
   vector<char> response;
 
@@ -30,6 +31,8 @@ int main(){
   // region loop detect face
 
   response.clear();
+
+  // 顔を検出するまで, コマンドをモジュールに送信し続ける
   while( response.empty() ) {
     response = cameraModule->detectObject(
         CameraModule::DETECT_OPTION1_ALL,
@@ -37,10 +40,14 @@ int main(){
         CameraModule::IMAGE_OPTION_NON
     );
   }
+
+  // モジュールからのレスポンスを解析して, 検出結果を得る
   cameraModule->responseAnalyze(CameraModule::DETECT_RESPONSE,
                                 CameraModule::DETECT_OPTION1_ALL,
                                 CameraModule::DETECT_OPTION2_ALL,
                                 &response);
+
+  // 検出結果のプリント
   cout << "Detect Results\n";
   vector<FaceResult> results = cameraModule->getFaceResults();
   for(auto itr = results.begin(); itr != results.end(); ++itr) {
@@ -65,7 +72,6 @@ int main(){
     cout << "totalEx    :" << itr->getTotalEx() << "\n";
     cout << "faceId     :" << itr->getFaceId() << "\n";
   }
-
 
   // endregion
 
