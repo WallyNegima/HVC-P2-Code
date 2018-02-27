@@ -243,11 +243,15 @@ vector<char> CameraModule::loadAlbum(){
   cerr << dataSize << "," << albumSize << "," << CRC << "\n";
 
   //アルバムデータを1行ずつ取り出して格納
+  int cnt = 0;
   while(getline(ifs, line)){
     int temp = atoi(line.c_str());
     unsigned char datum = temp & 0xFF;
-    cerr << datum;
+    cerr << cnt << ":" << datum;
+    cnt++;
   }
+
+  ifs.close();
 
 }
 
