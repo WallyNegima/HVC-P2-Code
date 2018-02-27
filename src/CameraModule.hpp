@@ -62,7 +62,7 @@ public:
   vector<char> detectObject(char option1, char option2, char imageOption);
   vector<char> registerFace(int faceId, int dataid);
   vector<char> registerToModuleRom();
-  vector<char> getModuleAlbum();
+  vector<char> saveAlbum();
   vector<char> loadAlbum();
 
   void responseAnalyze(int func, char option1, char option2, vector<char> *response);

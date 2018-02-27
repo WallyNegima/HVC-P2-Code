@@ -55,7 +55,7 @@ int main(int argc, char* argv[]){
 
   // アルバム情報をホストへ吐き出す
   response.clear();
-  response = cameraModule->getModuleAlbum();
+  response = cameraModule->saveAlbum();
   cameraModule->responseAnalyze(CameraModule::SAVE_ALBUM,
                                 -1, -1, &response);
 

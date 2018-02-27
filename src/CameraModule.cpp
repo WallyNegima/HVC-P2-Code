@@ -193,7 +193,7 @@ vector<char> CameraModule::registerToModuleRom() {
 
 // region getModuleAlbum アルバム情報をホストに吐き出す
 
-vector<char> CameraModule::getModuleAlbum() {
+vector<char> CameraModule::saveAlbum() {
 
   vector<char> response;
 
