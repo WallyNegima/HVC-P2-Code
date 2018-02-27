@@ -31,6 +31,7 @@ int main(int argc, char* argv[]){
   // region load album data
 
   response = cameraModule->loadAlbum();
-
+  cout << "main now\n";
   // endregion
+  return 0;
 }

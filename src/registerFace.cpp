@@ -58,16 +58,6 @@ int main(int argc, char* argv[]){
   response = cameraModule->getModuleAlbum();
   cameraModule->responseAnalyze(CameraModule::SAVE_ALBUM,
                                 -1, -1, &response);
-  cout << response.size() << "\n";
-  //album.txtに全データ数, アルバムサイズ, CRCの情報を書き込む
-  // ファイル出力ストリーム
-  string fileName = "album.txt";
-  ofstream ofs(fileName, ios::app);
-  cout << ofs.tellp();
-  for(auto itr = response.begin(); itr != response.end(); ++itr){
-    int datum = *itr;
-    ofs << datum << endl;
-  }
 
   // モジュールのアルバム情報をROMに保存
   response.clear();

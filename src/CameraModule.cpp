@@ -232,22 +232,20 @@ vector<char> CameraModule::loadAlbum(){
   ifstream ifs(fileName, ios::in);
   string line;
 
-  long dataSize, albumSize, CRC;
-  getline(ifs, line);
-  dataSize = atoi(line.c_str());
-  getline(ifs, line);
-  albumSize = atoi(line.c_str());
-  getline(ifs, line);
-  CRC = atoi(line.c_str());
-
-  cerr << dataSize << "," << albumSize << "," << CRC << "\n";
-
   //アルバムデータを1行ずつ取り出して格納
   int cnt = 0;
-  while(getline(ifs, line)){
+  while( !ifs.eof() ){
+    cerr << "a\n";
+    getline(ifs, line);
+    cerr << "b\n";
+    if( line.empty() ){
+       cerr << "break\n";
+       break; 
+    }
     int temp = atoi(line.c_str());
+    cerr << "c\n";
     unsigned char datum = temp & 0xFF;
-    cerr << cnt << ":" << datum << endl;
+    cerr << cnt << ":" << temp << "\n";
     cnt++;
   }
 
@@ -445,21 +443,15 @@ void CameraModule::responseAnalyze(int func,
         break;
       }
 
-      // データ長さ取得
-      // 4バイト分
-      long responseDataSize = getResponseBytes(response);
-      long albumSize = getResponseBytes(response);
-      long CRC = getResponseBytes(response);
-      cerr << responseDataSize << "," << albumSize << "," << CRC << "\n";
-      //album.txtに全データ数, アルバムサイズ, CRCの情報を書き込む
+      //album.txtに アルバムサイズ, CRCの情報を書き込む
       // ファイル出力ストリーム
       string fileName = "album.txt";
       ofstream ofs(fileName, ios::out);
-      ofs << responseDataSize << endl;
-      cerr << ofs.tellp() << "\n";
-      ofs << albumSize << endl;
-      cerr << ofs.tellp() << "\n";
-      ofs << CRC << endl;
+      for(auto itr = response->begin(); itr != response->end(); ++itr){
+        int datum = *itr;
+        ofs << datum << endl;
+      }
+        
       ofs.close();
 
       break;
