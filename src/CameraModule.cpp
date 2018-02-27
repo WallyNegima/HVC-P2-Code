@@ -240,10 +240,26 @@ vector<char> CameraModule::loadAlbum(){
     }
     int temp = atoi(line.c_str());
     unsigned char datum = temp & 0xFF;
+    response.push_back(datum);
   }
 
   ifs.close();
 
+  vector<char> response_copy;
+  for(auto itr = response.begin(); itr != response.end(); ++itr){
+    response_copy.push_back(*itr);
+  }
+
+  long albumSize = getResponseBytes(&response_copy) + 8;
+  unsigned char llsb, mlsb, lmsb, mmsb;
+  llsb = albumSize & 0xFF;
+  mlsb = (albumSize >> 8) & 0xFF;
+  lmsb = (albumSize >> 16) & 0xFF;
+  mmsb = (albumSize >> 24) & 0xFF;
+  response.insert(response.begin(), mmsb);
+  response.insert(response.begin(), lmsb);
+  response.insert(response.begin(), mlsb);
+  response.insert(response.begin(), llsb);
   return response;
 
 }
