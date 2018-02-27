@@ -245,21 +245,37 @@ vector<char> CameraModule::loadAlbum(){
 
   ifs.close();
 
+  // 送信するデータサイズをアルバムサイズから算出
   vector<char> response_copy;
   for(auto itr = response.begin(); itr != response.end(); ++itr){
     response_copy.push_back(*itr);
   }
-
   long albumSize = getResponseBytes(&response_copy) + 8;
+  cerr << albumSize << "\n";
+  
+  // データサイズを8ビットずつに区切ってコマンドに追加.
   unsigned char llsb, mlsb, lmsb, mmsb;
   llsb = albumSize & 0xFF;
   mlsb = (albumSize >> 8) & 0xFF;
   lmsb = (albumSize >> 16) & 0xFF;
   mmsb = (albumSize >> 24) & 0xFF;
-  response.insert(response.begin(), mmsb);
-  response.insert(response.begin(), lmsb);
-  response.insert(response.begin(), mlsb);
-  response.insert(response.begin(), llsb);
+  response.insert(response.begin() + 4, mmsb);
+  response.insert(response.begin() + 4, lmsb);
+  response.insert(response.begin() + 4, mlsb);
+  response.insert(response.begin() + 4, llsb);
+
+  // command に追加
+  for(auto itr = response.begin(); itr != response.end(); ++itr){
+    command_.push_back(*itr);
+  }
+
+  //コマンド送信
+  sendCommand();
+
+  //レスポンスを得る
+  response.clear();
+  response = getResponse();
+  
   return response;
 
 }
@@ -468,6 +484,25 @@ void CameraModule::responseAnalyze(int func,
       break;
 
       // endregion
+
+    }
+    // カメラのアルバム情報をファイルから読み込んだ時
+    case (CameraModule::LOAD_ALBUM) : {
+      // region カメラのアルバム情報をファイルから読み込んだ時の解析
+
+      // エラー検出
+      // 2バイト分
+      if (hasHeaderErr(response)) {
+        break;
+      }
+
+      // データ長さ取得
+      // 4バイト分
+      long responseDataSize = getResponseBytes(response);
+
+      // endregion
+
+      break;
 
     }
     default :

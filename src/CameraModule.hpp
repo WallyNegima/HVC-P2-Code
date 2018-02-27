@@ -51,6 +51,7 @@ public:
   static const int REGISTER_FACE = 1;
   static const int REGISTER_TO_ROM = 2;
   static const int SAVE_ALBUM = 3;
+  static const int LOAD_ALBUM = 4;
 
   // endregion
 
