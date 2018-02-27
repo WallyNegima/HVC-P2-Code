@@ -217,6 +217,14 @@ vector<char> CameraModule::saveAlbum() {
 
 // region loadAlbum アルバム情報をカメラに読み込む
 
+/**
+ * loadAlbum.
+ * <p>
+ * アルバムファイルからデータを読み取って,
+ * カメラモジュールにアルバム情報をセットする
+ *
+ * @return response
+ */
 vector<char> CameraModule::loadAlbum(){
 
   vector<char> response;
@@ -279,6 +287,28 @@ vector<char> CameraModule::loadAlbum(){
   return response;
 
 }
+
+// region deleteAlbum カメラのアルバム情報を削除する
+
+public vector<char> CameraModule::deleteAlbum() {
+
+  vector<char> response;
+
+  // アルバム情報をカメラにロードするコマンドをセット
+  setHeader(&command_);
+  command_.push_back(0x13);
+  command_.push_back(0x00);
+  command_.push_back(0x00);
+
+  //コマンド送信
+  sendCommand();
+
+  //レスポンスを得る
+  response = getResponse();
+
+}
+
+// endregion
 
 // region responseAnalyze レスポンスを分析する
 

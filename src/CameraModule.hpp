@@ -52,6 +52,7 @@ public:
   static const int REGISTER_TO_ROM = 2;
   static const int SAVE_ALBUM = 3;
   static const int LOAD_ALBUM = 4;
+  static const int DELETE_ALBUM = 5;
 
   // endregion
 
@@ -65,6 +66,7 @@ public:
   vector<char> registerToModuleRom();
   vector<char> saveAlbum();
   vector<char> loadAlbum();
+  vector<char> deleteAlbum();
 
   void responseAnalyze(int func, char option1, char option2, vector<char> *response);
 
