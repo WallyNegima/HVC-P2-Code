@@ -244,6 +244,8 @@ vector<char> CameraModule::loadAlbum(){
 
   ifs.close();
 
+  return response;
+
 }
 
 // region responseAnalyze レスポンスを分析する
