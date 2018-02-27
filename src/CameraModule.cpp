@@ -230,23 +230,16 @@ vector<char> CameraModule::loadAlbum(){
   // ファイルから読み取っていく
   string fileName = "album.txt";
   ifstream ifs(fileName, ios::in);
-  string line;
+  string line = "";
 
   //アルバムデータを1行ずつ取り出して格納
-  int cnt = 0;
   while( !ifs.eof() ){
-    cerr << "a\n";
     getline(ifs, line);
-    cerr << "b\n";
     if( line.empty() ){
-       cerr << "break\n";
        break; 
     }
     int temp = atoi(line.c_str());
-    cerr << "c\n";
     unsigned char datum = temp & 0xFF;
-    cerr << cnt << ":" << temp << "\n";
-    cnt++;
   }
 
   ifs.close();
