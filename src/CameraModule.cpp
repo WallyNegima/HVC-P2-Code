@@ -247,7 +247,7 @@ vector<char> CameraModule::loadAlbum(){
   while(getline(ifs, line)){
     int temp = atoi(line.c_str());
     unsigned char datum = temp & 0xFF;
-    cerr << cnt << ":" << datum;
+    cerr << cnt << ":" << datum << endl;
     cnt++;
   }
 
@@ -584,8 +584,12 @@ long CameraModule::getResponseBytes(vector<char> *response) {
   if (response->empty()) {
     return -1;
   }
-
-  long dataSize = response->at(0) | response->at(1) << 8 | response->at(2) << 16 | response->at(3) << 24;
+  long llsb, mlsb, lmsb, mmsb;
+  llsb = response->at(0);
+  mlsb = response->at(1) << 8;
+  lmsb = response->at(2) << 16;
+  mmsb = response->at(3) << 24;
+  long dataSize = mmsb | lmsb | mlsb | llsb;
   response->erase(response->begin(), response->begin() + 4);
 
   return dataSize;
