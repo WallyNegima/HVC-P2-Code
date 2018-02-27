@@ -241,25 +241,13 @@ vector<char> CameraModule::loadAlbum(){
   CRC = atoi(line.c_str());
 
   cerr << dataSize << "," << albumSize << "," << CRC << "\n";
-  ifs.close();
 
-  FILE* fp = fopen(fileName.c_str(), "rb");
-  if(fp == NULL){
-    printf("err file open\n");
-    return response;
-  }
-  int albumData;
-  fscanf(fp, "%d", &albumData);
-  fscanf(fp, "%d", &albumData);
-  fscanf(fp, "%d", &albumData);
   //アルバムデータを1行ずつ取り出して格納
-  for(int i=0; i<albumSize; i++){
-    unsigned char datum;
-    fscanf(fp, "%d", &albumData);
-    datum = albumData & 0xFF;
+  while(getline(ifs, line)){
+    int temp = atoi(line.c_str());
+    unsigned char datum = temp & 0xFF;
     cerr << datum;
   }
-  fclose(fp);
 
 }
 
