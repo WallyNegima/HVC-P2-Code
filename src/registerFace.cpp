@@ -65,7 +65,8 @@ int main(int argc, char* argv[]){
   ofstream ofs(fileName, ios::app);
   cout << ofs.tellp();
   for(auto itr = response.begin(); itr != response.end(); ++itr){
-    ofs << *itr << endl;
+    int datum = *itr;
+    ofs << datum << endl;
   }
 
   // モジュールのアルバム情報をROMに保存
