@@ -290,7 +290,7 @@ vector<char> CameraModule::loadAlbum(){
 
 // region deleteAlbum カメラのアルバム情報を削除する
 
-public vector<char> CameraModule::deleteAlbum() {
+vector<char> CameraModule::deleteAlbum() {
 
   vector<char> response;
 
