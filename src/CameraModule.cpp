@@ -594,6 +594,9 @@ void CameraModule::sendCommand() {
   // 送受信中の情報を全て消去
   serialFlush(device_);
 
+  // カメラモジュールのエラーをfalseに
+  error_ = false;
+
   // command_ にある全てのコマンド情報を送信
   for (auto itr = command_.begin(); itr != command_.end(); ++itr) {
     serialPutchar(device_, *itr);
