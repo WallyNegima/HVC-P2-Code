@@ -166,6 +166,21 @@ int checkCommand(int inputNum, CameraModule* cameraModule, vector<char> response
       cout << "imageWidth :" << result.getImageWidth() << "\n";
       cout << "imageHeight:" << result.getImageHeight() << "\n";
 
+      // モジュールのアルバム情報をROMに保存
+      response = cameraModule->registerToModuleRom();
+
+      //解析してエラーが無ければ情報をプリント
+      cameraModule->responseAnalyze(CameraModule::REGISTER_TO_ROM,
+                                    -1, -1, &response);
+
+      // エラー処理
+      if(cameraModule->hasError()){
+        cerr << "error save to rom\n";
+        return -1;
+      }
+
+      cout << "saved to Module ROM!\n";
+
       // endregion
 
       return CameraModule::REGISTER_FACE;
@@ -173,6 +188,23 @@ int checkCommand(int inputNum, CameraModule* cameraModule, vector<char> response
     case (CameraModule::SAVE_ALBUM) : {
 
       cout << "SAVE ALBUM\n";
+
+      // region save album to file
+
+      // アルバム情報をホストへ吐き出す
+      response = cameraModule->saveAlbum();
+      cameraModule->responseAnalyze(CameraModule::SAVE_ALBUM,
+                                    -1, -1, &response);
+
+      // エラー処理
+      if(cameraModule->hasError()){
+        cerr << "error save album to file\n";
+        return -1;
+      }
+
+      cout << "save album data to 'album.txt!'";
+
+      // endregion
 
       return CameraModule::SAVE_ALBUM;
     }
@@ -191,7 +223,7 @@ int checkCommand(int inputNum, CameraModule* cameraModule, vector<char> response
           &response);
 
       if(cameraModule->hasError()){
-        cout << "error\n";
+        cerr << "error load album\n";
         return -1;
       }
 
