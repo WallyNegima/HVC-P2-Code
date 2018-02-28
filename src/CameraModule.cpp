@@ -257,21 +257,15 @@ vector<char> CameraModule::loadAlbum(){
     }
     int temp = atoi(line.c_str());
     unsigned char datum = temp & 0xFF;
-    response.push_back(datum);
+    command_.push_back(datum);
   }
 
   ifs.close();
 
-  // command に追加
-  for(auto itr = response.begin(); itr != response.end(); ++itr){
-    long temp = *itr;
-    unsigned char datum = temp & 0xFF;
-    cerr << temp << ":" << datum << "\n";
-    command_.push_back(datum);
-  }
-
   //コマンド送信
   sendCommand();
+
+  delay(1000);
 
   //レスポンスを得る
   response = getResponse();
@@ -544,6 +538,26 @@ void CameraModule::responseAnalyze(
       break;
 
     }
+
+    case (CameraModule::DELETE_ALBUM) : {
+      
+      // region
+
+      // エラー検出
+      // 2バイト分
+      if (hasHeaderErr(response)) {
+        error_ = true;
+        break;
+      }
+
+      // データ長さ取得
+      // 4バイト分
+      long responseDataSize = getResponseBytes(response);
+
+      break;
+
+      // endregion  
+    }
     default :
       cerr;
   }
@@ -594,7 +608,7 @@ void CameraModule::sendCommand() {
   }
 
   //レスポンスまで少し時間がかかるため, まつ
-  delay(600);
+  delay(700);
 
 }
 
@@ -629,11 +643,13 @@ bool CameraModule::hasHeaderErr(vector<char> *response) {
 
   // 空っぽならエラー
   if (response->empty()) {
+    cerr << "response is empty\n";
     return true;
   }
 
   // 1バイト目
   if (response->front() != 0xFE) {
+    cerr << "header err : " << response->front() << "\n";
     return true;
   }
   response->erase(response->begin());

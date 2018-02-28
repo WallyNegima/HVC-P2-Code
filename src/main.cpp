@@ -240,6 +240,8 @@ int checkCommand(int inputNum, CameraModule* cameraModule, vector<char> response
         return -1;
       }
 
+      cout << "saved to Module ROM!\n";
+
       // endregion
 
       return CameraModule::LOAD_ALBUM;
@@ -265,6 +267,8 @@ int checkCommand(int inputNum, CameraModule* cameraModule, vector<char> response
         return -1;
       }
 
+      cout << "deleted album data!\n";
+
       // モジュールのアルバム情報をROMに保存
       response = cameraModule->registerToModuleRom();
 
@@ -277,6 +281,7 @@ int checkCommand(int inputNum, CameraModule* cameraModule, vector<char> response
         cerr << "error save to rom\n";
         return -1;
       }
+      cout << "saved to Module ROM!\n";
 
       return CameraModule::DELETE_ALBUM;
     }
