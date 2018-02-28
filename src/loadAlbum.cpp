@@ -35,11 +35,24 @@ int main(int argc, char* argv[]){
   // endregion
 
   cameraModule->responseAnalyze(
-    CameraModule::LOAD_ALBUM,
-    -1,
-    -1,
-    &response);
+      CameraModule::LOAD_ALBUM,
+      -1,
+      -1,
+      &response);
   cout << "load album!\n";
+
+  // モジュールのアルバム情報をROMに保存
+  response = cameraModule->registerToModuleRom();
+
+  //解析してエラーが無ければ情報をプリント
+  cameraModule->responseAnalyze(CameraModule::REGISTER_TO_ROM,
+                                -1, -1, &response);
+
+  // エラー処理
+  if(cameraModule->hasError()){
+    cerr << "error save to rom\n";
+    return -1;
+  }
 
   return 0;
 }

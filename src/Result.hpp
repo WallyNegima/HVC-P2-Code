@@ -12,7 +12,6 @@ private:
 	long posY_;
 	long size_;
 	long confidence_;
-	bool error_;
 
     // endregion
 
@@ -27,8 +26,6 @@ public :
 	void setSize(long size);
 	long getConfidence();
 	void setConfidence(long confidence);
-	bool getError();
-	void setError(bool err);
 
     // endregion
 
@@ -132,30 +129,5 @@ inline void Result::setConfidence(long confidence){
 
 // endregion
 
-// region error accessor
-
-/**
- * getError.
- * <p>
- * レスポンスにエラーがあるとtrueになる.
- *
- * @return error_
- */
-inline bool Result::getError() {
-	return error_;
-}
-
-/**
- * setError.
- * <p>
- * レスポンスのエラー情報をセット
- *
- * @param err
- */
-inline void Result::setError(bool err){
-	error_ = err;
-}
-
-// endregion
 
 

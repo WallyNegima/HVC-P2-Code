@@ -20,6 +20,7 @@ using namespace std;
  * @param boadrate ボーレート.USBなら9600固定
  */
 CameraModule::CameraModule() {
+  error_ = false;
 }
 
 // endregion
@@ -45,6 +46,14 @@ int CameraModule::connect(string path, int baudrate) {
   cerr << "connected!\n";
 
   return device_;
+}
+
+// endregion
+
+// region hasError レスポンスがエラーかどうかを返す
+
+bool CameraModule::hasError(){
+  return error_;
 }
 
 // endregion
@@ -217,6 +226,14 @@ vector<char> CameraModule::saveAlbum() {
 
 // region loadAlbum アルバム情報をカメラに読み込む
 
+/**
+ * loadAlbum.
+ * <p>
+ * アルバムファイルからデータを読み取って,
+ * カメラモジュールにアルバム情報をセットする
+ *
+ * @return response
+ */
 vector<char> CameraModule::loadAlbum(){
 
   vector<char> response;
@@ -236,49 +253,52 @@ vector<char> CameraModule::loadAlbum(){
   while( !ifs.eof() ){
     getline(ifs, line);
     if( line.empty() ){
-       break; 
+       break;
     }
     int temp = atoi(line.c_str());
     unsigned char datum = temp & 0xFF;
-    response.push_back(datum);
+    command_.push_back(datum);
   }
 
   ifs.close();
 
-  // 送信するデータサイズをアルバムサイズから算出
-  vector<char> response_copy;
-  for(auto itr = response.begin(); itr != response.end(); ++itr){
-    response_copy.push_back(*itr);
-  }
-  long albumSize = getResponseBytes(&response_copy) + 8;
-  cerr << albumSize << "\n";
-  
-  // データサイズを8ビットずつに区切ってコマンドに追加.
-  unsigned char llsb, mlsb, lmsb, mmsb;
-  llsb = albumSize & 0xFF;
-  mlsb = (albumSize >> 8) & 0xFF;
-  lmsb = (albumSize >> 16) & 0xFF;
-  mmsb = (albumSize >> 24) & 0xFF;
-  response.insert(response.begin() + 4, mmsb);
-  response.insert(response.begin() + 4, lmsb);
-  response.insert(response.begin() + 4, mlsb);
-  response.insert(response.begin() + 4, llsb);
-
-  // command に追加
-  for(auto itr = response.begin(); itr != response.end(); ++itr){
-    command_.push_back(*itr);
-  }
-
   //コマンド送信
   sendCommand();
 
+  delay(1000);
+
   //レスポンスを得る
-  response.clear();
   response = getResponse();
   
   return response;
 
 }
+
+// endregion
+
+// region deleteAlbum カメラのアルバム情報を削除する
+
+vector<char> CameraModule::deleteAlbum() {
+
+  vector<char> response;
+
+  // アルバム情報をカメラにロードするコマンドをセット
+  setHeader(&command_);
+  command_.push_back(0x13);
+  command_.push_back(0x00);
+  command_.push_back(0x00);
+
+  //コマンド送信
+  sendCommand();
+
+  //レスポンスを得る
+  response = getResponse();
+
+  return response;
+
+}
+
+// endregion
 
 // region responseAnalyze レスポンスを分析する
 
@@ -293,10 +313,11 @@ vector<char> CameraModule::loadAlbum(){
  * @param option2 nullもありえる
  * @param response
  */
-void CameraModule::responseAnalyze(int func,
-                                   char option1,
-                                   char option2,
-                                   vector<char> *response) {
+void CameraModule::responseAnalyze(
+    int func,
+    char option1,
+    char option2,
+    vector<char> *response) {
 
   switch (func) {
     // 物体検出結果を分析
@@ -305,11 +326,16 @@ void CameraModule::responseAnalyze(int func,
 
       // エラー検出
       if (hasHeaderErr(response)) {
+        error_ = true;
         break;
       }
 
       // データ長さ取得
       long responseDataSize = getResponseBytes(response);
+
+      faceResults_.clear();
+      bodyResults_.clear();
+      handResults_.clear();
 
       // 検出した物体の数を取得
       int bodyNum = response->at(0);
@@ -412,6 +438,7 @@ void CameraModule::responseAnalyze(int func,
       // エラー検出
       // 2バイト分
       if (hasHeaderErr(response)) {
+        error_ = true;
         break;
       }
 
@@ -449,12 +476,15 @@ void CameraModule::responseAnalyze(int func,
       // エラー検出
       // 2バイト分
       if (hasHeaderErr(response)) {
+        error_ = true;
         break;
       }
 
       // データ長さ取得
       // 4バイト分
       long responseDataSize = getResponseBytes(response);
+
+      break;
 
       // endregion
 
@@ -467,6 +497,7 @@ void CameraModule::responseAnalyze(int func,
       // エラー検出
       // 2バイト分
       if (hasHeaderErr(response)) {
+        error_ = true;
         break;
       }
 
@@ -488,11 +519,13 @@ void CameraModule::responseAnalyze(int func,
     }
     // カメラのアルバム情報をファイルから読み込んだ時
     case (CameraModule::LOAD_ALBUM) : {
+
       // region カメラのアルバム情報をファイルから読み込んだ時の解析
 
       // エラー検出
       // 2バイト分
       if (hasHeaderErr(response)) {
+        error_ = true;
         break;
       }
 
@@ -505,9 +538,31 @@ void CameraModule::responseAnalyze(int func,
       break;
 
     }
+
+    case (CameraModule::DELETE_ALBUM) : {
+      
+      // region
+
+      // エラー検出
+      // 2バイト分
+      if (hasHeaderErr(response)) {
+        error_ = true;
+        break;
+      }
+
+      // データ長さ取得
+      // 4バイト分
+      long responseDataSize = getResponseBytes(response);
+
+      break;
+
+      // endregion  
+    }
     default :
       cerr;
   }
+
+  response->clear();
 
 }
 
@@ -544,13 +599,16 @@ void CameraModule::sendCommand() {
   // 送受信中の情報を全て消去
   serialFlush(device_);
 
+  // カメラモジュールのエラーをfalseに
+  error_ = false;
+
   // command_ にある全てのコマンド情報を送信
   for (auto itr = command_.begin(); itr != command_.end(); ++itr) {
     serialPutchar(device_, *itr);
   }
 
   //レスポンスまで少し時間がかかるため, まつ
-  delay(600);
+  delay(700);
 
 }
 
@@ -585,11 +643,13 @@ bool CameraModule::hasHeaderErr(vector<char> *response) {
 
   // 空っぽならエラー
   if (response->empty()) {
+    cerr << "response is empty\n";
     return true;
   }
 
   // 1バイト目
   if (response->front() != 0xFE) {
+    cerr << "header err : " << response->front() << "\n";
     return true;
   }
   response->erase(response->begin());
