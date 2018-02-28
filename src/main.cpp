@@ -25,15 +25,16 @@ int main(){
   // endregion
 
 
-  // region ループ
+  // region check
 
   while( response.empty() ) {
     response = cameraModule->getDeviceInformation(CameraModule::CMD_GET_VERSIONS);
-    cout << "connected\n";
   }
   response.clear();
 
   // endregion
+
+  // region ループ
 
   // 無限ループで色々できる
   while(true){
@@ -121,16 +122,59 @@ int checkCommand(int inputNum, CameraModule* cameraModule, vector<char> response
 
     }
     case (CameraModule::REGISTER_FACE) : {
+
       cout << "REGISTER FACE\n";
+
+      // region register face
+
+      int faceId, dataId;
+      string name;
+
+      cout << "faceIDを入力:";
+      cin >> faceId;
+      cout << "dataIDを入力:";
+      cin >> dataId;
+      cout << "名前を入力:";
+      cin >> name;
+
+
+      // 顔を検出して認証するまでコマンドを送信
+      while( response.empty() ){
+        response = cameraModule->registerFace(
+            faceId,
+            dataId
+        );
+      }
+
+      // モジュールからのレスポンスを解析して, 検出結果を得る
+      cameraModule->responseAnalyze(CameraModule::REGISTER_FACE,
+                                    -1,-1, &response);
+
+      // エラー処理
+      if(cameraModule->hasError()){
+        cout << "error\n";
+        return -1;
+      }
+
+      FaceResult result = cameraModule->getFaceResults().front();
+      cout << "userID     :" << faceId << "\n";
+      cout << "dataID     :" << dataId << "\n";
+      cout << "userName   :" << name << "\n";
+      cout << "imageWidth :" << result.getImageWidth() << "\n";
+      cout << "imageHeight:" << result.getImageHeight() << "\n";
+
+      // endregion
 
       return CameraModule::REGISTER_FACE;
     }
     case (CameraModule::SAVE_ALBUM) : {
+
       cout << "SAVE ALBUM\n";
 
       return CameraModule::SAVE_ALBUM;
     }
     case (CameraModule::LOAD_ALBUM) : {
+
       cout << "LOAD ALBUM\n";
 
       // region load album data
@@ -153,6 +197,7 @@ int checkCommand(int inputNum, CameraModule* cameraModule, vector<char> response
       return CameraModule::LOAD_ALBUM;
     }
     case (CameraModule::DELETE_ALBUM) : {
+
       cout << "DELETE ALBUM\n";
 
       return CameraModule::DELETE_ALBUM;
