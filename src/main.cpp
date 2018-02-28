@@ -235,6 +235,23 @@ int checkCommand(int inputNum, CameraModule* cameraModule, vector<char> response
 
       cout << "DELETE ALBUM\n";
 
+      // 顔を検出するまで, コマンドをモジュールに送信し続ける
+      while( response.empty() ) {
+        response = cameraModule->deleteAlbum();
+      }
+
+      cameraModule->responseAnalyze(
+          CameraModule::DELETE_ALBUM,
+          -1,
+          -1,
+          response
+      );
+
+      if(cameraModule->hasError()){
+        cerr << "error : delete album\n";
+        return -1;
+      }
+
       return CameraModule::DELETE_ALBUM;
     }
     case (99) : {
