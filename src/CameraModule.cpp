@@ -267,7 +267,9 @@ vector<char> CameraModule::loadAlbum(){
   for(auto itr = response.begin(); itr != response.end(); ++itr){
     response_copy.push_back(*itr);
   }
-  long dataSize = getResponseBytes(&response_copy) + 8;
+  long albumsize = getResponseBytes(&response_copy);
+  long dataSize = albumsize + 8;
+  cerr << albumsize << "\n";
   cerr << dataSize << "\n";
   
   // データサイズを8ビットずつに区切ってコマンドに追加.
