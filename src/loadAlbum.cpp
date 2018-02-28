@@ -39,7 +39,12 @@ int main(int argc, char* argv[]){
       -1,
       -1,
       &response);
-  cout << "load album!\n";
+  
+  if(cameraModule->hasError()){
+    cerr << "error load album\n";
+  }else{
+    cout << "load album!\n";
+  }
 
   // モジュールのアルバム情報をROMに保存
   response = cameraModule->registerToModuleRom();
@@ -53,6 +58,8 @@ int main(int argc, char* argv[]){
     cerr << "error save to rom\n";
     return -1;
   }
+
+  cout << "saved album to rom\n";
 
   return 0;
 }
