@@ -20,6 +20,7 @@ using namespace std;
  * @param boadrate ボーレート.USBなら9600固定
  */
 CameraModule::CameraModule() {
+  error_ = false;
 }
 
 // endregion
@@ -45,6 +46,14 @@ int CameraModule::connect(string path, int baudrate) {
   cerr << "connected!\n";
 
   return device_;
+}
+
+// endregion
+
+// region hasError レスポンスがエラーかどうかを返す
+
+bool CameraModule::hasError(){
+  return error_;
 }
 
 // endregion
@@ -288,6 +297,8 @@ vector<char> CameraModule::loadAlbum(){
 
 }
 
+// endregion
+
 // region deleteAlbum カメラのアルバム情報を削除する
 
 vector<char> CameraModule::deleteAlbum() {
@@ -323,10 +334,11 @@ vector<char> CameraModule::deleteAlbum() {
  * @param option2 nullもありえる
  * @param response
  */
-void CameraModule::responseAnalyze(int func,
-                                   char option1,
-                                   char option2,
-                                   vector<char> *response) {
+void CameraModule::responseAnalyze(
+    int func,
+    char option1,
+    char option2,
+    vector<char> *response) {
 
   switch (func) {
     // 物体検出結果を分析
@@ -335,6 +347,7 @@ void CameraModule::responseAnalyze(int func,
 
       // エラー検出
       if (hasHeaderErr(response)) {
+        error_ = true;
         break;
       }
 
@@ -442,6 +455,7 @@ void CameraModule::responseAnalyze(int func,
       // エラー検出
       // 2バイト分
       if (hasHeaderErr(response)) {
+        error_ = true;
         break;
       }
 
@@ -479,6 +493,7 @@ void CameraModule::responseAnalyze(int func,
       // エラー検出
       // 2バイト分
       if (hasHeaderErr(response)) {
+        error_ = true;
         break;
       }
 
@@ -497,6 +512,7 @@ void CameraModule::responseAnalyze(int func,
       // エラー検出
       // 2バイト分
       if (hasHeaderErr(response)) {
+        error_ = true;
         break;
       }
 
@@ -518,11 +534,13 @@ void CameraModule::responseAnalyze(int func,
     }
     // カメラのアルバム情報をファイルから読み込んだ時
     case (CameraModule::LOAD_ALBUM) : {
+
       // region カメラのアルバム情報をファイルから読み込んだ時の解析
 
       // エラー検出
       // 2バイト分
       if (hasHeaderErr(response)) {
+        error_ = true;
         break;
       }
 

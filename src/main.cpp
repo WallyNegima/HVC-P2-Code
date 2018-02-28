@@ -10,6 +10,9 @@ const int baudrate = 9600;
 
 // endregion
 
+// プロトタイプ宣言
+int checkCommand(int inputNum);
+
 int main(){
 
   CameraModule* cameraModule = new CameraModule();
@@ -21,58 +24,145 @@ int main(){
 
   // endregion
 
-  // region get settings and コネクション確認
+
+  // region ループ
+
   while( response.empty() ) {
     response = cameraModule->getDeviceInformation(CameraModule::CMD_GET_VERSIONS);
+    cout << "connected\n";
   }
-
-  // endregion
-
-  // region loop detect face
-
   response.clear();
 
-  // 顔を検出するまで, コマンドをモジュールに送信し続ける
-  while( response.empty() ) {
-    response = cameraModule->detectObject(
-        CameraModule::DETECT_OPTION1_ALL,
-        CameraModule::DETECT_OPTION2_ALL,
-        CameraModule::IMAGE_OPTION_NON
-    );
-  }
+  // endregion
 
-  // モジュールからのレスポンスを解析して, 検出結果を得る
-  cameraModule->responseAnalyze(CameraModule::DETECT_RESPONSE,
-                                CameraModule::DETECT_OPTION1_ALL,
-                                CameraModule::DETECT_OPTION2_ALL,
-                                &response);
+  // 無限ループで色々できる
+  while(true){
+    int inputNum, responseNum;
+    cout << "-----MENUS-----\n";
+    cout << CameraModule::DETECT_RESPONSE << " : 顔を検出する\n";
+    cout << CameraModule::REGISTER_FACE << " : 顔を認証して登録する\n";
+    cout << CameraModule::SAVE_ALBUM << " : アルバム情報をファイルに保存\n";
+    cout << CameraModule::LOAD_ALBUM << " : アルバム情報をファイルからカメラに読み込む\n";
+    cout << CameraModule::DELETE_ALBUM << " : アルバム情報をカメラから削除\n";
+    cout << "99: EXIT\n";
+    cout << "入力\n";
+    cin >> inputNum;
 
-  // 検出結果のプリント
-  cout << "Detect Results\n";
-  vector<FaceResult> results = cameraModule->getFaceResults();
-  for(auto itr = results.begin(); itr != results.end(); ++itr) {
-    cout << "X          :" << itr->getPosX() << "\n";
-    cout << "Y          :" << itr->getPosY() << "\n";
-    cout << "Size       :" << itr->getSize() << "\n";
-    cout << "Confidence :" << itr->getConfidence() << "\n";
-    cout << "hDirection :" << itr->getHorizontalDirection() << "\n";
-    cout << "vDirection :" << itr->getVerticalDirection() << "\n";
-    cout << "inclination:" << itr->getInclination() << "\n";
-    cout << "age        :" << itr->getAge() << "\n";
-    cout << "sex        :" << itr->getSex() << "\n";
-    cout << "hSight     :" << itr->getHorizontalSight() << "\n";
-    cout << "vSight     :" << itr->getVerticalSight() << "\n";
-    cout << "eyeCloseL  :" << itr->getEyeCloseLeft() << "\n";
-    cout << "eyeCloseR  :" << itr->getEyeCloseRight() << "\n";
-    cout << "noneEx     :" << itr->getNoneEX() << "\n";
-    cout << "joyEx      :" << itr->getJoyEx() << "\n";
-    cout << "surpEx     :" << itr->getSurpriseEx() << "\n";
-    cout << "angryEx    :" << itr->getAngryEx() << "\n";
-    cout << "sadEx      :" << itr->getSadEx() << "\n";
-    cout << "totalEx    :" << itr->getTotalEx() << "\n";
-    cout << "faceId     :" << itr->getFaceId() << "\n";
+    responseNum = checkCommand(inputNum, cameraModule, response);
+
+    if( responseNum == 99){
+      break;
+    }
+
   }
 
   // endregion
 
+  cout << "FINISH\n";
+
+  return 0;
+
 }
+
+int checkCommand(int inputNum, CameraModule* cameraModule, vector<char> response){
+
+  switch (inputNum){
+
+    case (CameraModule::DETECT_RESPONSE) : {
+
+      cout << "DETECT OBJECT\n";
+
+      // region loop detect face
+
+      // 顔を検出するまで, コマンドをモジュールに送信し続ける
+      while( response.empty() ) {
+        response = cameraModule->detectObject(
+            CameraModule::DETECT_OPTION1_ALL,
+            CameraModule::DETECT_OPTION2_ALL,
+            CameraModule::IMAGE_OPTION_NON
+        );
+      }
+
+      // モジュールからのレスポンスを解析して, 検出結果を得る
+      cameraModule->responseAnalyze(CameraModule::DETECT_RESPONSE,
+                                    CameraModule::DETECT_OPTION1_ALL,
+                                    CameraModule::DETECT_OPTION2_ALL,
+                                    &response);
+
+      // 検出結果のプリント
+      cout << "Detect Results\n";
+      vector<FaceResult> results = cameraModule->getFaceResults();
+      for(auto itr = results.begin(); itr != results.end(); ++itr) {
+        cout << "X          :" << itr->getPosX() << "\n";
+        cout << "Y          :" << itr->getPosY() << "\n";
+        cout << "Size       :" << itr->getSize() << "\n";
+        cout << "Confidence :" << itr->getConfidence() << "\n";
+        cout << "hDirection :" << itr->getHorizontalDirection() << "\n";
+        cout << "vDirection :" << itr->getVerticalDirection() << "\n";
+        cout << "inclination:" << itr->getInclination() << "\n";
+        cout << "age        :" << itr->getAge() << "\n";
+        cout << "sex        :" << itr->getSex() << "\n";
+        cout << "hSight     :" << itr->getHorizontalSight() << "\n";
+        cout << "vSight     :" << itr->getVerticalSight() << "\n";
+        cout << "eyeCloseL  :" << itr->getEyeCloseLeft() << "\n";
+        cout << "eyeCloseR  :" << itr->getEyeCloseRight() << "\n";
+        cout << "noneEx     :" << itr->getNoneEX() << "\n";
+        cout << "joyEx      :" << itr->getJoyEx() << "\n";
+        cout << "surpEx     :" << itr->getSurpriseEx() << "\n";
+        cout << "angryEx    :" << itr->getAngryEx() << "\n";
+        cout << "sadEx      :" << itr->getSadEx() << "\n";
+        cout << "totalEx    :" << itr->getTotalEx() << "\n";
+        cout << "faceId     :" << itr->getFaceId() << "\n";
+      }
+
+      // endregion
+
+      return CameraModule::DETECT_RESPONSE;
+
+    }
+    case (CameraModule::REGISTER_FACE) : {
+      cout << "REGISTER FACE\n";
+
+      return CameraModule::REGISTER_FACE;
+    }
+    case (CameraModule::SAVE_ALBUM) : {
+      cout << "SAVE ALBUM\n";
+
+      return CameraModule::SAVE_ALBUM;
+    }
+    case (CameraModule::LOAD_ALBUM) : {
+      cout << "LOAD ALBUM\n";
+
+      // region load album data
+
+      cameraModule->loadAlbum();
+
+      cameraModule->responseAnalyze(
+          CameraModule::LOAD_ALBUM,
+          -1,
+          -1,
+          &response);
+
+      if(cameraModule->hasError()){
+        cout << "error\n";
+        return -1
+      }
+
+      // endregion
+
+      return CameraModule::LOAD_ALBUM;
+    }
+    case (CameraModule::DELETE_ALBUM) : {
+      cout << "DELETE ALBUM\n";
+
+      return CameraModule::DELETE_ALBUM;
+    }
+    case (99) : {
+      return 99;
+    }
+
+  }
+
+  return -1;
+}
+

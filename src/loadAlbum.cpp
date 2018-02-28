@@ -35,10 +35,10 @@ int main(int argc, char* argv[]){
   // endregion
 
   cameraModule->responseAnalyze(
-    CameraModule::LOAD_ALBUM,
-    -1,
-    -1,
-    &response);
+      CameraModule::LOAD_ALBUM,
+      -1,
+      -1,
+      &response);
   cout << "load album!\n";
 
   return 0;

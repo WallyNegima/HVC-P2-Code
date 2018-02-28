@@ -23,6 +23,8 @@ private:
   int device_;
   vector<char> command_;
   int commandBytes_;
+  bool error_;
+
   void setHeader(vector<char> *command);
   void sendCommand();
   vector<char> getResponse();
@@ -58,6 +60,8 @@ public:
 
   CameraModule();
   int connect(string path, int baudrate);
+  void responseAnalyze(int func, char option1, char option2, vector<char> *response);
+  bool hasError();
 
   // command
   vector<char> getDeviceInformation(int cmd);
@@ -67,8 +71,6 @@ public:
   vector<char> saveAlbum();
   vector<char> loadAlbum();
   vector<char> deleteAlbum();
-
-  void responseAnalyze(int func, char option1, char option2, vector<char> *response);
 
   // accessor
   vector<Result> getBodyResults();
@@ -83,6 +85,8 @@ public:
   void setCommand(vector<char> command);
   int getCommandBytes();
   void setCommandBytes(int commandBytes);
+  bool getError();
+  void setError(bool err);
 
   // endregion
 
@@ -228,4 +232,31 @@ inline void CameraModule::setCommandBytes(int commandBytes){
   commandBytes_ = commandBytes;
 }
 // endregion
+
+// region error accessor
+
+/**
+ * getError.
+ * <p>
+ * レスポンスにエラーがあるとtrueになる.
+ *
+ * @return error_
+ */
+inline bool Result::getError() {
+  return error_;
+}
+
+/**
+ * setError.
+ * <p>
+ * レスポンスのエラー情報をセット
+ *
+ * @param err
+ */
+inline void Result::setError(bool err){
+  error_ = err;
+}
+
+// endregion
+
 
