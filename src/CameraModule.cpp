@@ -283,7 +283,8 @@ vector<char> CameraModule::loadAlbum(){
 
   // command に追加
   for(auto itr = response.begin(); itr != response.end(); ++itr){
-    command_.push_back(*itr);
+    unsigned char datum = *itr;
+    command_.push_back(datum);
   }
 
   //コマンド送信
