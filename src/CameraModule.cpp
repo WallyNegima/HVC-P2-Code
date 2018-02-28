@@ -267,19 +267,19 @@ vector<char> CameraModule::loadAlbum(){
   for(auto itr = response.begin(); itr != response.end(); ++itr){
     response_copy.push_back(*itr);
   }
-  long albumSize = getResponseBytes(&response_copy) + 8;
-  cerr << albumSize << "\n";
+  long dataSize = getResponseBytes(&response_copy) + 8;
+  cerr << dataSize << "\n";
   
   // データサイズを8ビットずつに区切ってコマンドに追加.
   unsigned char llsb, mlsb, lmsb, mmsb;
-  llsb = albumSize & 0xFF;
-  mlsb = (albumSize >> 8) & 0xFF;
-  lmsb = (albumSize >> 16) & 0xFF;
-  mmsb = (albumSize >> 24) & 0xFF;
-  response.insert(response.begin() + 4, mmsb);
-  response.insert(response.begin() + 4, lmsb);
-  response.insert(response.begin() + 4, mlsb);
-  response.insert(response.begin() + 4, llsb);
+  llsb = dataSize & 0xFF;
+  mlsb = (dataSize >> 8) & 0xFF;
+  lmsb = (dataSize >> 16) & 0xFF;
+  mmsb = (dataSize >> 24) & 0xFF;
+  command_.push_back(llsb);
+  command_.push_back(mlsb);
+  command_.push_back(lmsb);
+  command_.push_back(mmsb);
 
   // command に追加
   for(auto itr = response.begin(); itr != response.end(); ++itr){
