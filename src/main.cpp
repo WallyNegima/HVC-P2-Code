@@ -11,7 +11,7 @@ const int baudrate = 9600;
 // endregion
 
 // プロトタイプ宣言
-int checkCommand(int inputNum);
+int checkCommand(int inputNum, CameraModule* cameraModule, vector<char> response);
 
 int main(){
 
@@ -145,7 +145,7 @@ int checkCommand(int inputNum, CameraModule* cameraModule, vector<char> response
 
       if(cameraModule->hasError()){
         cout << "error\n";
-        return -1
+        return -1;
       }
 
       // endregion

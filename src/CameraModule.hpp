@@ -242,7 +242,7 @@ inline void CameraModule::setCommandBytes(int commandBytes){
  *
  * @return error_
  */
-inline bool Result::getError() {
+inline bool CameraModule::getError() {
   return error_;
 }
 
@@ -253,7 +253,7 @@ inline bool Result::getError() {
  *
  * @param err
  */
-inline void Result::setError(bool err){
+inline void CameraModule::setError(bool err){
   error_ = err;
 }
 

@@ -13,6 +13,4 @@ clean:
 	$(RM) *.out *.o
 load.out: loadAlbum.cpp module.o result.o
 	g++ -I/usr/local/include -L/usr/local/lib -lwiringPi -std=gnu++0x -o loadAlbum.out loadAlbum.cpp result.o module.o
-util.out: util.cpp module.o result.o
-	 g++ -I/usr/local/include -L/usr/local/lib -lwiringPi -std=gnu++0x -o util.out util.cpp result.o module.o
 
