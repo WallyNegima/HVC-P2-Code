@@ -307,7 +307,7 @@ vector<char> CameraModule::loadAlbum(){
 
   // command に追加
   for(auto itr = response.begin(); itr != response.end(); ++itr){
-    long temp = *itr
+    long temp = *itr;
     unsigned char datum = temp & 0xFF;
     command_.push_back(datum);
   }
