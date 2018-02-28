@@ -317,6 +317,8 @@ vector<char> CameraModule::deleteAlbum() {
   //レスポンスを得る
   response = getResponse();
 
+  return response;
+
 }
 
 // endregion

@@ -244,11 +244,24 @@ int checkCommand(int inputNum, CameraModule* cameraModule, vector<char> response
           CameraModule::DELETE_ALBUM,
           -1,
           -1,
-          response
+          &response
       );
 
       if(cameraModule->hasError()){
         cerr << "error : delete album\n";
+        return -1;
+      }
+
+      // モジュールのアルバム情報をROMに保存
+      response = cameraModule->registerToModuleRom();
+
+      //解析してエラーが無ければ情報をプリント
+      cameraModule->responseAnalyze(CameraModule::REGISTER_TO_ROM,
+                                    -1, -1, &response);
+
+      // エラー処理
+      if(cameraModule->hasError()){
+        cerr << "error save to rom\n";
         return -1;
       }
 
