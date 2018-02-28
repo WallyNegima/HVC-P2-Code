@@ -137,25 +137,28 @@ int checkCommand(int inputNum, CameraModule* cameraModule, vector<char> response
       cout << "名前を入力:";
       cin >> name;
 
+      while(true){
+        // 顔を検出して認証するまでコマンドを送信
+        while( response.empty() ){
+          response = cameraModule->registerFace(
+              faceId,
+              dataId
+          );
+        }
 
-      // 顔を検出して認証するまでコマンドを送信
-      while( response.empty() ){
-        response = cameraModule->registerFace(
-            faceId,
-            dataId
-        );
+        // モジュールからのレスポンスを解析して, 検出結果を得る
+        cameraModule->responseAnalyze(CameraModule::REGISTER_FACE,
+                                      -1,-1, &response);
+
+        // エラー処理
+        if(cameraModule->hasError()){
+          cout << "retry\n";
+        }else{
+          break;
+        }
+
       }
-
-      // モジュールからのレスポンスを解析して, 検出結果を得る
-      cameraModule->responseAnalyze(CameraModule::REGISTER_FACE,
-                                    -1,-1, &response);
-
-      // エラー処理
-      if(cameraModule->hasError()){
-        cout << "error\n";
-        return -1;
-      }
-
+      
       FaceResult result = cameraModule->getFaceResults().front();
       cout << "userID     :" << faceId << "\n";
       cout << "dataID     :" << dataId << "\n";
