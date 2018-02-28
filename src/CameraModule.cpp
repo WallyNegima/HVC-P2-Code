@@ -253,7 +253,7 @@ vector<char> CameraModule::loadAlbum(){
   while( !ifs.eof() ){
     getline(ifs, line);
     if( line.empty() ){
-       break; 
+       break;
     }
     int temp = atoi(line.c_str());
     unsigned char datum = temp & 0xFF;
@@ -261,12 +261,34 @@ vector<char> CameraModule::loadAlbum(){
   }
 
   ifs.close();
+//
+//  char* fileName = "album.txt";
+//  FILE *fp = fopen(fileName, "rb");
+//  if(fp == NULL){
+//    printf("err file open\n");
+//  }
+//
+//  for(int i=0; i<albumSize; i++){
+//    printf("%d",i);
+//    unsigned char microAlbumData;
+//    int albumData;
+//    fscanf(fp, "%d", &albumData);
+//    microAlbumData = getBitFromN(albumData, 0);
+//    command[i+16] = microAlbumData;
+//    serialPutchar(fd, command[i+16]);
+//  }
+//  int llsbi, mlsbi, lmsbi, mmsbi;
+//  llsbi = fscanf(fp, "%d", &llsbi);
+//  mlsbi = fscanf(fp, "%d", &mlsbi);
+//  lmsbi = fscanf(fp, "%d", &lmsbi);
+//  mmsbi = fscanf(fp, "%d", &mmsbi);
 
   // 送信するデータサイズをアルバムサイズから算出
-  vector<char> response_copy;
-  for(auto itr = response.begin(); itr != response.end(); ++itr){
-    response_copy.push_back(*itr);
-  }
+
+  vector<char> response_copy = response;
+//  for(auto itr = response.begin(); itr != response.end(); ++itr){
+//    response_copy.push_back(*itr);
+//  }
   long albumsize = getResponseBytes(&response_copy);
   long dataSize = albumsize + 8;
   cerr << albumsize << "\n";
@@ -285,7 +307,8 @@ vector<char> CameraModule::loadAlbum(){
 
   // command に追加
   for(auto itr = response.begin(); itr != response.end(); ++itr){
-    unsigned char datum = *itr;
+    long temp = *itr
+    unsigned char datum = temp & 0xFF;
     command_.push_back(datum);
   }
 
