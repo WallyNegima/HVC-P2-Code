@@ -227,6 +227,19 @@ int checkCommand(int inputNum, CameraModule* cameraModule, vector<char> response
         return -1;
       }
 
+      // モジュールのアルバム情報をROMに保存
+      response = cameraModule->registerToModuleRom();
+
+      //解析してエラーが無ければ情報をプリント
+      cameraModule->responseAnalyze(CameraModule::REGISTER_TO_ROM,
+                                    -1, -1, &response);
+
+      // エラー処理
+      if(cameraModule->hasError()){
+        cerr << "error save to rom\n";
+        return -1;
+      }
+
       // endregion
 
       return CameraModule::LOAD_ALBUM;
