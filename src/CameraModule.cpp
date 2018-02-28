@@ -503,6 +503,8 @@ void CameraModule::responseAnalyze(
       // 4バイト分
       long responseDataSize = getResponseBytes(response);
 
+      break;
+
       // endregion
 
     }
