@@ -359,6 +359,10 @@ void CameraModule::responseAnalyze(
       // データ長さ取得
       long responseDataSize = getResponseBytes(response);
 
+      faceResults_.clear();
+      bodyResults_.clear();
+      handResults_.clear();
+
       // 検出した物体の数を取得
       int bodyNum = response->at(0);
       int handNum = response->at(1);
