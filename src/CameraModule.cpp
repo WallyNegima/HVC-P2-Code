@@ -557,6 +557,8 @@ void CameraModule::responseAnalyze(
       cerr;
   }
 
+  response->clear();
+
 }
 
 // endregion
