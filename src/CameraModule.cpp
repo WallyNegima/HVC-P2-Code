@@ -267,14 +267,11 @@ vector<char> CameraModule::loadAlbum(){
 
   //コマンド送信
   sendCommand();
-  delay(500);
   cerr << "sent command\n";
 
   //レスポンスを得る
-  while(response.empty()){
-    response = getResponse();
-    cerr << "got response\n";
-  }
+  response = getResponse();
+  cerr << "got response\n";
 
   return response;
 
@@ -627,7 +624,6 @@ vector<char> CameraModule::getResponse() {
 
   while (serialDataAvail(device_)) {
     responses.push_back(serialGetchar(device_));
-    cerr << responses.back();
   }
 
   return responses;

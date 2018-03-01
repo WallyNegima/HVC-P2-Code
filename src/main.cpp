@@ -214,7 +214,7 @@ int checkCommand(int inputNum, CameraModule* cameraModule, vector<char> response
 
       // region load album data
 
-      cameraModule->loadAlbum();
+      response = cameraModule->loadAlbum();
 
       cameraModule->responseAnalyze(
           CameraModule::LOAD_ALBUM,
