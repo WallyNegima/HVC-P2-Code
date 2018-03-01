@@ -248,6 +248,7 @@ vector<char> CameraModule::loadAlbum(){
   string fileName = "album.txt";
   ifstream ifs(fileName, ios::in);
   string line = "";
+  cerr << "opened file\n";
 
   //アルバムデータを1行ずつ取り出して格納
   while( !ifs.eof() ){
@@ -261,6 +262,8 @@ vector<char> CameraModule::loadAlbum(){
   }
 
   ifs.close();
+
+  cerr << "got command\n";
 
   //コマンド送信
   sendCommand();
