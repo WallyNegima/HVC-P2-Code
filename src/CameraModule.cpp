@@ -268,8 +268,11 @@ vector<char> CameraModule::loadAlbum(){
   delay(1000);
 
   //レスポンスを得る
-  response = getResponse();
-  
+  while(response.empty()){
+    response = getResponse();
+    cerr << "got response\n";
+  }
+
   return response;
 
 }
