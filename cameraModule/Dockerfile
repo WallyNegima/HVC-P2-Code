@@ -48,13 +48,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && rm -rf /var/lib/apt/lists/* \
   && apt-get clean
 
-RUN apt-get update && apt-get -y install libi2c-dev 
-RUN apt-get -y install cmake 
-
+RUN apt-get update && apt-get -y install libi2c-dev\
+    ruby-dev\
+    libssl-dev\
+    libreadline-dev\
+    cmake
+RUN apt-get -y install --upgrade gcc
 
 # install wiringpi
 WORKDIR /mylib
-RUN git clone git://git.drogon.net/wiringPi 
+RUN git clone git://git.drogon.net/wiringPi
 WORKDIR wiringPi
 RUN ./build
 WORKDIR /mylib
@@ -64,8 +67,9 @@ RUN git clone https://github.com/msgpack/msgpack-c.git
 WORKDIR msgpack-c
 RUN cmake .
 RUN make
-RUN sudo make install 
-WORKDIR /mylib
+RUN sudo make install
+WORKDIR /root
+WORKDIR src
 
 # install libfluent
 RUN git clone https://github.com/m-mizutani/libfluent.git
@@ -73,8 +77,10 @@ WORKDIR libfluent
 RUN cmake .
 RUN make
 RUN sudo make install
-WORKDIR /mylib
+WORKDIR /root
+WORKDIR src
 
-WORKDIR /
-# CMD : docker run  するときに実行される
 COPY 99-serial.rules /etc/udev/rules.d
+RUN sudo /sbin/ldconfig -v
+
+# CMD : docker run  するときに実行される
